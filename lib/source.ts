@@ -1,13 +1,16 @@
 import { loader } from 'fumadocs-core/source';
-import { createMDXSource } from 'fumadocs-mdx';
 import { anleitungenDocs, adminDocs } from '@/.source';
 
 export const anleitungenSource = loader({
   baseUrl: '/anleitungen',
-  source: createMDXSource(anleitungenDocs),
+  source: {
+    files: anleitungenDocs.toFumadocsSource().files(),
+  },
 });
 
 export const adminSource = loader({
   baseUrl: '/anleitungen/admin',
-  source: createMDXSource(adminDocs),
+  source: {
+    files: adminDocs.toFumadocsSource().files(),
+  },
 });
