@@ -1,0 +1,33 @@
+services:
+  ggs-docs:
+    image: ghcr.io/simonFrank14/ggs-docs:latest
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - OUTSTATIC_SECRET=${OUTSTATIC_SECRET}
+      - GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
+      - OST_GITHUB_ID=${OST_GITHUB_ID}
+      - OST_GITHUB_SECRET=${OST_GITHUB_SECRET}
+      - NEXT_PUBLIC_OUTSTATIC_REPO_OWNER=SimonFrank14
+      - NEXT_PUBLIC_OUTSTATIC_REPO_SLUG=ggs-docs
+      - NEXT_PUBLIC_OUTSTATIC_REPO_BRANCH=main
+    networks:
+      - proxy-network
+    labels:
+      - "traefik.enable=true"
+      # Öffentliche Anleitungen
+      - "traefik.http.routers.ggs-docs.rule=Host(`goethe-gymnasium-stolberg.de`) && PathPrefix(`/anleitungen`)"
+      - "traefik.http.routers.ggs-docs.entrypoints=websecure"
+      - "traefik.http.routers.ggs-docs.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ggs-docs.loadbalancer.server.port=3000"
+      # Outstatic Editor – separat absicherbar (z.B. per BasicAuth-Middleware)
+      - "traefik.http.routers.ggs-outstatic.rule=Host(`goethe-gymnasium-stolberg.de`) && PathPrefix(`/outstatic`)"
+      - "traefik.http.routers.ggs-outstatic.entrypoints=websecure"
+      - "traefik.http.routers.ggs-outstatic.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.ggs-outstatic.service=ggs-docs"
+      # Admin-Bereich – TODO: BasicAuth oder OAuth2-Proxy-Middleware ergänzen
+      # - "traefik.http.routers.ggs-docs.middlewares=ggs-admin-auth@file"
+
+networks:
+  proxy-network:
+    external: true

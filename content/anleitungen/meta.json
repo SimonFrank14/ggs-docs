@@ -1,0 +1,27 @@
+{
+  "title": "Anleitungen",
+  "root": true,
+  "pages": [
+    "index",
+    {
+      "type": "folder",
+      "name": "iPads & Tablets",
+      "pages": ["ipad/einrichtung-privat-2026"]
+    },
+    {
+      "type": "folder",
+      "name": "WLAN & Netzwerk",
+      "pages": []
+    },
+    {
+      "type": "folder",
+      "name": "Schülerportal",
+      "pages": []
+    },
+    {
+      "type": "folder",
+      "name": "Microsoft 365",
+      "pages": []
+    }
+  ]
+}

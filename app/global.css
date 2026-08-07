@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/style.css';
+
+@theme {
+  /* GGS Farbpalette – aus dem Screenshot extrahiert */
+  --color-ggs-gold: #f0b429;
+  --color-ggs-gold-dark: #c8960a;
+  --color-ggs-gold-light: #fde68a;
+  --color-ggs-warn-bg: #fce4e4;
+  --color-ggs-warn-border: #f5c6c6;
+  --color-ggs-surface: #f9f9f9;
+  --color-ggs-border: #e5e5e5;
+  --color-ggs-text: #1a1a1a;
+  --color-ggs-text-muted: #555555;
+
+  /* Fumadocs color overrides – Gold als Primärfarbe */
+  --color-fd-primary: var(--color-ggs-gold);
+  --color-fd-primary-foreground: #1a1a1a;
+}
+
+:root {
+  --fd-nav-height: 3.5rem;
+}
+
+/* Schritt-Nummern wie auf der GGS-Seite */
+.prose h2 > strong:first-child,
+.data-step {
+  color: var(--color-ggs-gold);
+  font-weight: 700;
+}
