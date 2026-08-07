@@ -3,20 +3,6 @@
   "root": true,
   "pages": [
     "index",
-    {
-      "type": "folder",
-      "name": "Netzwerk & Infrastruktur",
-      "pages": ["netzwerk/uebersicht"]
-    },
-    {
-      "type": "folder",
-      "name": "Server & Dienste",
-      "pages": []
-    },
-    {
-      "type": "folder",
-      "name": "MDM & Gerätemanagement",
-      "pages": []
-    }
+    "netzwerk"
   ]
 }
