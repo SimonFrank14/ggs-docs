@@ -1,11 +1,11 @@
 import { defineDocs, defineConfig } from 'fumadocs-mdx/config';
 import { rehypeCode } from 'fumadocs-core/mdx-plugins';
 
-export const anleitungen = defineDocs({
+export const anleitungenDocs = defineDocs({
   dir: 'content/anleitungen',
 });
 
-export const admin = defineDocs({
+export const adminDocs = defineDocs({
   dir: 'content/admin',
 });
 
