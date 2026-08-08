@@ -12,6 +12,15 @@
   /* Abgeleitet: erfüllt WCAG AA auf Weiß, siehe lib/contrast.test.ts */
   --color-ggs-link: #8a6a00;
 
+  /*
+   * Eigene, hellere Goldvariante für den Dunkelmodus: #8a6a00 erreicht auf dem
+   * Fumadocs-Dunkelhintergrund (#121212) nur 3,70:1 und verfehlt WCAG AA.
+   * #a37e00 erreicht dort 4,94:1, siehe lib/contrast.test.ts. Zwei Werte statt
+   * einem, weil ein einziges Gold nicht gleichzeitig auf Weiß UND auf #121212
+   * AA-Kontrast erreichen kann.
+   */
+  --color-ggs-link-dark: #a37e00;
+
   --font-ggs-sans: var(--font-ggs-sans);
   --font-ggs-serif: var(--font-ggs-serif);
   --font-ggs-nav: var(--font-ggs-nav);
@@ -33,6 +42,21 @@
   --fd-nav-height: 3.5rem;
   --color-fd-primary: var(--color-ggs-link);
   --color-fd-primary-foreground: #ffffff;
+}
+
+/*
+ * Eigene .dark-Regel aus demselben Grund wie :root oben: fumadocs-ui/style.css
+ * bringt für den Dunkelmodus eine eigene, ebenfalls ungelayerte .dark-Regel
+ * mit (--color-fd-primary: hsl(0, 0%, 98%)). Beide Selektoren haben dieselbe
+ * Spezifität; unsere Regel steht später in dieser Datei und gewinnt deshalb.
+ * --color-ggs-link selbst bleibt unverändert (3,70:1 auf #121212, siehe
+ * lib/contrast.test.ts) — deshalb --color-ggs-link-dark statt Wiederverwendung.
+ * Vordergrund #171717 statt Weiß: Weiß auf --color-ggs-link-dark erreicht nur
+ * 3,79:1, #171717 (Fumadocs' eigener Hellmodus-Primärton) erreicht 4,73:1.
+ */
+.dark {
+  --color-fd-primary: var(--color-ggs-link-dark);
+  --color-fd-primary-foreground: #171717;
 }
 
 body {
