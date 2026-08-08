@@ -612,14 +612,18 @@ Replace `app/global.css` entirely:
   --font-ggs-sans: var(--font-ggs-sans);
   --font-ggs-serif: var(--font-ggs-serif);
   --font-ggs-nav: var(--font-ggs-nav);
-
-  /* Fumadocs-Überschreibungen */
-  --color-fd-primary: var(--color-ggs-link);
-  --color-fd-primary-foreground: #ffffff;
 }
 
 :root {
   --fd-nav-height: 3.5rem;
+
+  /* Fumadocs-Überschreibungen gehören hierher, NICHT in den @theme-Block:
+     fumadocs-ui/style.css deklariert --color-fd-primary selbst und wird in
+     Zeile 2 nach 'tailwindcss' importiert — aus @theme heraus verliert die
+     Überschreibung gegen die spätere Bibliotheksdeklaration und bleibt
+     wirkungslos. Hier, nach beiden @import-Zeilen, greift sie. */
+  --color-fd-primary: var(--color-ggs-link);
+  --color-fd-primary-foreground: #ffffff;
 }
 
 body {
