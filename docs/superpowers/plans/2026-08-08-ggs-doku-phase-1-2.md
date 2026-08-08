@@ -371,10 +371,13 @@ Der alte `app/anleitungen/[[...slug]]/page.tsx` importierte zusätzlich `getPage
 - [ ] **Step 6: Bauen und prüfen**
 
 Run: `npx fumadocs-mdx && npx tsc --noEmit`
-Expected: keine Ausgabe (keine Typfehler)
+Expected: **genau ein** verbleibender Fehler, und zwar in `app/outstatic/[[...ost]]/page.tsx` (`Type 'Promise<OutstaticData>' is missing the following properties…`). Er wird in Task 3 behoben.
 
-Run: `npm run build`
-Expected: Build erfolgreich, Route `/` und `/[[...slug]]` als dynamisch (`ƒ`) aufgeführt
+Alle übrigen Fehler des Ausgangszustands müssen verschwunden sein — insbesondere `lib/source.ts … This expression is not callable` (verursacht durch den überflüssigen `.files()`-Aufruf) und sämtliche Fehler unter `app/anleitungen/`.
+
+Erscheinen weitere Fehler zu `page.data.body`, `page.data.toc` oder `page.data.full`, ist die Typkette von `defineDocs` zum Loader unterbrochen: dann prüfen, ob `npx fumadocs-mdx` vor `tsc` gelaufen ist und `.source/` neu erzeugt wurde.
+
+Der Produktionsbuild wird erst am Ende von Task 3 geprüft, weil er ohne den dortigen Outstatic-Fix nicht durchläuft.
 
 - [ ] **Step 7: Commit**
 
@@ -391,12 +394,13 @@ Zwei Defekte verhindern bzw. verschleiern derzeit einen sauberen Produktionsbuil
 
 **Files:**
 - Modify: `Dockerfile:22`
+- Modify: `app/outstatic/[[...ost]]/page.tsx`
 - Delete: `instrumentation.ts`
 - Create: `public/.gitkeep`
 
 **Interfaces:**
 - Consumes: nichts
-- Produces: baubares Container-Image
+- Produces: baubares Container-Image, `npx tsc --noEmit` ohne Ausgabe
 
 - [ ] **Step 1: `public/`-Verzeichnis anlegen**
 
@@ -413,6 +417,32 @@ git rm instrumentation.ts
 ```
 
 Die Datei legte beim Serverstart einen globalen `localStorage`-Stub an — ein von allen gleichzeitigen Requests geteiltes Objekt. Unter einheitlichem SSR mit rollenabhängigen Inhalten ist ein Mechanismus, der SSR-Fehler stumm schluckt, das falsche Werkzeug.
+
+- [ ] **Step 2b: Outstatic-Route auf die asynchrone API umstellen**
+
+`Outstatic()` liefert in 2.2.3 ein `Promise<OutstaticData>`; die Seite verwendet es synchron und bricht deshalb die Typprüfung. Task 8 verdrahtet `tsc --noEmit` in CI — ohne diesen Fix wäre die Pipeline von Anfang an rot.
+
+Replace `app/outstatic/[[...ost]]/page.tsx` entirely:
+
+```tsx
+import 'outstatic/outstatic.css';
+import { Outstatic } from 'outstatic';
+import { OstClient } from 'outstatic/client';
+
+export default async function Page() {
+  const ostData = await Outstatic();
+  return <OstClient ostData={ostData} />;
+}
+```
+
+Run: `npx tsc --noEmit`
+Expected: keine Ausgabe
+
+Meldet der Compiler weiterhin einen Fehler an dieser Datei, die tatsächliche Signatur nachschlagen und ihr folgen:
+
+```bash
+grep -rn "export declare function Outstatic\|export declare const Outstatic" node_modules/outstatic/dist/**/*.d.ts | head -5
+```
 
 - [ ] **Step 3: Prüfen, ob der SSR-Fehler ohne den Stub wiederkehrt**
 
@@ -431,7 +461,7 @@ Expected: Build läuft bis `Successfully tagged` durch
 
 ```bash
 git add -A
-git commit -m "fix: public-Verzeichnis anlegen und globalen localStorage-Stub entfernen"
+git commit -m "fix: public-Verzeichnis, Outstatic-Route und globalen localStorage-Stub"
 ```
 
 ---
