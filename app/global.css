@@ -15,14 +15,24 @@
   --font-ggs-sans: var(--font-ggs-sans);
   --font-ggs-serif: var(--font-ggs-serif);
   --font-ggs-nav: var(--font-ggs-nav);
-
-  /* Fumadocs-Überschreibungen */
-  --color-fd-primary: var(--color-ggs-link);
-  --color-fd-primary-foreground: #ffffff;
 }
 
+/*
+ * Fumadocs-Überschreibungen bewusst NICHT im @theme-Block oben:
+ * fumadocs-ui/style.css bringt --color-fd-primary bereits vorkompiliert
+ * in einem eigenen @layer-theme-Block mit und steht in dieser Datei nach
+ * @import 'tailwindcss'. Eine erneute Deklaration im @theme-Block landet
+ * im selben Layer und verliert gegen die spätere Bibliotheksdeklaration.
+ * Als normale :root-Deklaration (unlayered) gewinnt sie zuverlässig.
+ * Weiß (#ffffff) als Vordergrundfarbe liegt bei ca. 5:1 auf --color-ggs-link
+ * und wird von Fumadocs als Textfarbe auf --color-fd-primary-Hintergrund
+ * verwendet (.text-fd-primary-foreground neben .bg-fd-primary), nicht als
+ * Hintergrund hinter dunklem Text.
+ */
 :root {
   --fd-nav-height: 3.5rem;
+  --color-fd-primary: var(--color-ggs-link);
+  --color-fd-primary-foreground: #ffffff;
 }
 
 body {
