@@ -8,6 +8,9 @@ out/
 # Fumadocs generated types
 .source/
 
+# Superpowers SDD-Arbeitsverzeichnis (Ledger, Briefs, Review-Pakete)
+.superpowers/
+
 # Env files
 .env
 .env.local
