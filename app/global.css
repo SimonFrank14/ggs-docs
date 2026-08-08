@@ -2,29 +2,44 @@
 @import 'fumadocs-ui/style.css';
 
 @theme {
-  /* GGS Farbpalette – aus dem Screenshot extrahiert */
-  --color-ggs-gold: #f0b429;
-  --color-ggs-gold-dark: #c8960a;
-  --color-ggs-gold-light: #fde68a;
-  --color-ggs-warn-bg: #fce4e4;
-  --color-ggs-warn-border: #f5c6c6;
-  --color-ggs-surface: #f9f9f9;
-  --color-ggs-border: #e5e5e5;
-  --color-ggs-text: #1a1a1a;
-  --color-ggs-text-muted: #555555;
+  /* Aus dem Elementor-Kit der Live-Seite extrahiert */
+  --color-ggs-primary: #fdd700;      /* Flächen, Buttons, Zierlinien */
+  --color-ggs-secondary: #333333;    /* Überschriften */
+  --color-ggs-text: #626262;         /* Fließtext, Navigation */
+  --color-ggs-accent: #dfc15e;       /* gedämpftes Gold */
+  --color-ggs-surface: #eeeeee;
 
-  /* Fumadocs color overrides – Gold als Primärfarbe */
-  --color-fd-primary: var(--color-ggs-gold);
-  --color-fd-primary-foreground: #1a1a1a;
+  /* Abgeleitet: erfüllt WCAG AA auf Weiß, siehe lib/contrast.test.ts */
+  --color-ggs-link: #8a6a00;
+
+  --font-ggs-sans: var(--font-ggs-sans);
+  --font-ggs-serif: var(--font-ggs-serif);
+  --font-ggs-nav: var(--font-ggs-nav);
+
+  /* Fumadocs-Überschreibungen */
+  --color-fd-primary: var(--color-ggs-link);
+  --color-fd-primary-foreground: #ffffff;
 }
 
 :root {
   --fd-nav-height: 3.5rem;
 }
 
-/* Schritt-Nummern wie auf der GGS-Seite */
-.prose h2 > strong:first-child,
-.data-step {
-  color: var(--color-ggs-gold);
-  font-weight: 700;
+body {
+  font-family: var(--font-ggs-sans), system-ui, sans-serif;
+  color: var(--color-ggs-text);
+}
+
+h1, h2, h3, h4 {
+  color: var(--color-ggs-secondary);
+}
+
+/* Gelbe Zierlinie unter Abschnittsüberschriften, wie auf der Schulhomepage */
+.prose h2::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 3px;
+  margin-top: 0.5rem;
+  background: var(--color-ggs-primary);
 }
