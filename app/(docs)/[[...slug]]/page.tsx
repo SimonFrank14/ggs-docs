@@ -1,15 +1,15 @@
-import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
-import { notFound } from 'next/navigation';
-import { adminSource } from '@/lib/source';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
+import { docsSource } from '@/lib/source';
 
 interface Props {
   params: Promise<{ slug?: string[] }>;
 }
 
-export default async function AdminPage({ params }: Props) {
+export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const page = adminSource.getPage(slug);
+  const page = docsSource.getPage(slug);
   if (!page) notFound();
 
   const MDX = page.data.body;
@@ -25,18 +25,13 @@ export default async function AdminPage({ params }: Props) {
   );
 }
 
-export async function generateStaticParams() {
-  return adminSource.generateParams();
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const page = adminSource.getPage(slug);
-  if (!page) notFound();
+  const page = docsSource.getPage(slug);
+  if (!page) return {};
 
   return {
-    title: `${page.data.title} – GGS Admin`,
+    title: `${page.data.title} – GGS Dokumentation`,
     description: page.data.description,
-    robots: { index: false, follow: false },
   };
 }
