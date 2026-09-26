@@ -2,7 +2,7 @@ import './global.css';
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Providers } from '@/components/providers';
-import { bricolage, figtree, jetbrainsMono } from '@/lib/fonts';
+import { montserrat, roboto, robotoMono } from '@/lib/fonts';
 
 export const metadata: Metadata = {
   title: 'GGS Hilfe',
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="de"
       suppressHydrationWarning
-      className={`${figtree.variable} ${bricolage.variable} ${jetbrainsMono.variable}`}
+      className={`${roboto.variable} ${montserrat.variable} ${robotoMono.variable}`}
     >
       <body>
         <Providers>{children}</Providers>

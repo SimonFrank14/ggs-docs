@@ -1,4 +1,6 @@
 import { loader } from 'fumadocs-core/source';
+import { icons } from 'lucide-react';
+import { createElement } from 'react';
 import { docs } from '@/.source';
 import { canAccess, filterTree, type Viewer } from './access';
 
@@ -17,6 +19,10 @@ const rawSource = docs.toFumadocsSource() as unknown as {
 
 export const docsSource = loader({
   baseUrl: '/',
+  // `icon` in meta.json oder Frontmatter nennt ein Lucide-Icon, z. B. "Wifi"
+  icon(name) {
+    if (name && name in icons) return createElement(icons[name as keyof typeof icons]);
+  },
   source: {
     files: rawSource.files(),
   },

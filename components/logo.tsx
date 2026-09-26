@@ -1,7 +1,6 @@
 /**
- * Wortmarke der Doku: gelbe Fläche als Textmarker-Strich hinter „GGS",
- * daneben der Name. Bewusst kein Nachbau des Homepage-Logos, das eine
- * Gebäudezeichnung trägt und in 3,5 rem Höhe nicht lesbar wäre.
+ * Wortmarke der Doku im Stil der Schulhomepage: gelbe Fläche mit dunkler
+ * Schrift, daneben der Name in Montserrat wie das Hauptmenü der Homepage.
  */
 export function Logo() {
   return (
@@ -9,7 +8,9 @@ export function Logo() {
       <span className="ggs-logo-mark" aria-hidden="true">
         GGS
       </span>
-      <span className="ggs-logo-text">Hilfe</span>
+      <span className="ggs-logo-text">
+        Goethe-Gymnasium <span className="ggs-logo-sub">Hilfe &amp; Anleitungen</span>
+      </span>
     </span>
   );
 }

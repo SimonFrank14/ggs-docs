@@ -439,39 +439,41 @@ Das ist Phase G4 und nicht Voraussetzung für den Zammad-Weg.
 
 ## 9. Gestaltung der Doku
 
-Ersetzt Doku-Spec §6.2 in Teilen.
+Ersetzt Doku-Spec §6.2 in Teilen. Überarbeitet nach Rückmeldung am 2026-09-26: **ein Doku-Portal, in dem man Dinge schnell findet, angelehnt an die Schulhomepage, etwas moderner.**
 
 ### 9.1 Befund
 
-Das bisherige Konzept verwendet das Schulgold als Linkfarbe und dunkelt es dafür auf `#8A6A00` ab. Das erfüllt WCAG AA, liest sich aber als Braun und nicht mehr als die Farbe der Schule. Zusammen mit dem unveränderten Fumadocs-Standardlayout wirkt die Doku wie ein Template.
+Das erste Konzept verwendete das Schulgold als Linkfarbe und dunkelte es dafür auf `#8A6A00` ab. Das erfüllt WCAG AA, liest sich aber als Braun. Zusammen mit dem unveränderten Fumadocs-Standardlayout wirkte die Doku wie ein Template und nicht wie ein Teil der Schule.
 
-### 9.2 Farbkonzept „Textmarker"
+### 9.2 Farben: wie die Homepage, Gelb nur als Fläche
 
-Gold ist eine **Flächenfarbe**, keine Textfarbe. Statt es für Text abzudunkeln, wird es dort eingesetzt, wo es auf Weiß funktioniert: als Markierung hinter und unter dunkler Schrift.
+Die Tokens der Homepage (Doku-Spec §6.1) bleiben die Grundlage. Gelb steht wie dort hinter dunkler Schrift, nie als Schrift auf Weiß.
 
 | Token | Hell | Dunkel | Verwendung |
 |---|---|---|---|
-| `ggs-gold` | `#FDD700` | `#FDD700` | Buttons, Markierungen, Unterstreichung von Links, aktive Navigation |
-| `ggs-gold-soft` | `#FFF4B8` | `#3A3208` | Hinterlegung aktiver Elemente |
-| `ggs-ink` | `#1C2430` | `#F3F1EA` | Überschriften, Links, Primärfarbe |
-| `ggs-text` | `#3D4654` | `#C9CCD3` | Fließtext |
-| `ggs-paper` | `#FBFAF6` | `#12151B` | Hintergrund |
+| Gold | `#FDD700` | `#FDD700` | Kopfbereich der Startseite, Icon-Flächen, Zierlinien, Unterstreichung von Links |
+| Gold soft | `#FFF5BF` | `#3A3208` | Hinterlegung aktiver Elemente, Hover |
+| Überschrift | `#333333` | `#F3F1EA` | Überschriften, Links, Primärfarbe (hell) |
+| Fließtext | `#4D4D4D` | `#C9CCD3` | etwas dunkler als `#626262` der Homepage, weil Doku lange Texte hat |
+| Gedämpft | `#626262` | `#A3A9B4` | Nebentexte |
+| Hintergrund | `#FFFFFF` | `#12151B` | |
 
-Links sind Tinte mit gelber Unterstreichung; bei Hover wird die Unterstreichung zur Hinterlegung, wie ein Textmarker. Im Dunkelmodus ist Gold direkt als Textfarbe lesbar (> 12:1) und wird dort Primärfarbe. Die Kontrastwerte sind in `lib/contrast.test.ts` belegt.
+Im Dunkelmodus ist Gold als Schrift lesbar (> 12:1) und wird Primärfarbe. Alle Paarungen stehen in `lib/contrast.test.ts`.
 
 ### 9.3 Typografie
 
-- **Überschriften:** Bricolage Grotesque — eigenständig, gut lesbar, nicht die Schriften der Homepage, aber verwandt im Charakter
-- **Fließtext:** Figtree — offene Formen, am Telefon gut lesbar
-- **Code und Befehle:** JetBrains Mono — Runbooks enthalten Befehle
+Schriften der Homepage: **Roboto** für Text, **Montserrat** für Überschriften und die gesperrten Versalien der Abschnittstitel, **Roboto Mono** für Befehle in Runbooks. Roboto Slab entfällt.
 
-Roboto, Roboto Slab und Montserrat entfallen. Die Verbindung zur Homepage tragen Farbe, Logo-Zeichen und der Rückweg, nicht die Schrift.
+### 9.4 Startseite als Portal
 
-### 9.4 Startseite
+Die Wurzelseite nutzt ein eigenes Layout ohne Sidebar:
 
-Die Wurzelseite rendert statt reinem MDX eine eigene Startseite: Kopfbereich mit Suche, Kacheln für die Themenbereiche aus dem **rollengefilterten** Navigationsbaum (ein anonymer Besucher sieht keine Admin-Kachel), Rückweg zur Schulhomepage.
+1. **Kopfbereich in Gold** mit großer Suche in der Mitte — der schnellste Weg ist Tippen
+2. **„Häufig gesucht"**: Seiten mit `featured: true` im Frontmatter als Chips
+3. **Themenkacheln** wie das Kartenraster der Homepage: Icon auf gelber Fläche, Titel, die ersten vier Anleitungen **als Direktlinks** — zwei Klicks bis zur Antwort. Das Icon kommt aus `meta.json` (`"icon": "Wifi"`, Lucide-Namen)
+4. **„Nichts gefunden?"** mit dem Weg zum IT-Support
 
----
+Alles kommt aus dem **rollengefilterten** Baum: Ein anonymer Besucher sieht keine Admin-Kachel und keinen Admin-Chip. Die Doku-Seiten behalten Sidebar und Inhaltsverzeichnis.
 
 ## 10. Phasen
 
@@ -517,3 +519,4 @@ Sortiert nach Schadenshöhe, wie Doku-Spec §8.1:
 | 8 | Schnittstelle zu SchILD | SchILD-NRW 3 mit SVWS-Server (REST) oder direkter Datenbankzugriff (nur lesend, eigener DB-Nutzer mit Views auf die nötigen Felder). Klären vor `schild.*` |
 | 9 | Endpunkte in Jamf School für Code-Sperre, Bypass-Code, Ortung, Lehrer-Einschränkungen | Gegen die Jamf-School-API-Doku prüfen, bevor die Werkzeuge gebaut werden |
 | 10 | Laufzeit der SSO-Zertifikate | Laut IT-Team sechs Monate; Entra ID erzeugt SAML-Signaturzertifikate standardmäßig mit drei Jahren. Welche Anwendungen betroffen sind und woher die sechs Monate kommen, in `graph.sso_zertifikat.status` sichtbar machen |
+| 11 | Windmill statt eigenem Werkzeug-Runner? | Abwägung am 2026-09-26 begonnen: Windmill als Runner für Skripte, Zeitpläne und Freigaben, davor ein dünnes Gateway für Pseudonymisierung, Tresor und Stufen. Entscheidung vor G1 |

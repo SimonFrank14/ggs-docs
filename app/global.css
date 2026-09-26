@@ -2,17 +2,15 @@
 @import 'fumadocs-ui/style.css';
 
 /*
- * Farbkonzept „Textmarker" (Runbook-Spec §9.2): Das Schulgold ist eine
- * Flächenfarbe, keine Textfarbe. Es markiert hinter und unter dunkler Schrift,
- * statt für Text zu Braun abgedunkelt zu werden. Alle Paarungen sind in
- * lib/contrast.test.ts gegen WCAG AA belegt.
+ * Angelehnt an die Schulhomepage (Doku-Spec §6.1), etwas moderner:
+ * Gelb als Fläche hinter dunkler Schrift, #333 für Überschriften, Roboto für
+ * Text, Montserrat für Überschriften und gesperrte Versalien, Kartenraster.
+ * Gelb ist nie Textfarbe auf Weiß (1,4:1). Alle Paarungen stehen in
+ * lib/contrast.test.ts.
  */
 @theme {
   --color-ggs-gold: #fdd700;
-  --color-ggs-gold-soft: #fff4b8;
-  --color-ggs-ink: #1c2430;
-  --color-ggs-text: #3d4654;
-  --color-ggs-paper: #fbfaf6;
+  --color-ggs-ink: #333333;
 
   --font-ggs-sans: var(--font-ggs-sans);
   --font-ggs-display: var(--font-ggs-display);
@@ -25,32 +23,38 @@
  * ebenfalls ungelayerte Regel, die später in dieser Datei steht, gewinnt.
  */
 :root {
-  --ggs-gold-soft: #fff4b8;
-  --ggs-text: #3d4654;
-  --ggs-heading: #1c2430;
+  --ggs-gold-soft: #fff5bf;
+  --ggs-heading: #333333;
+  --ggs-text: #4d4d4d;
+  --ggs-hero-bg: #fdd700;
+  --ggs-hero-fg: #333333;
+  --ggs-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
 
-  --color-fd-background: #fbfaf6;
-  --color-fd-foreground: #1c2430;
-  --color-fd-muted: #f2f0e8;
-  --color-fd-muted-foreground: #5b6472;
+  --color-fd-background: #ffffff;
+  --color-fd-foreground: #333333;
+  --color-fd-muted: #f4f4f4;
+  --color-fd-muted-foreground: #626262;
   --color-fd-card: #ffffff;
-  --color-fd-card-foreground: #1c2430;
+  --color-fd-card-foreground: #333333;
   --color-fd-popover: #ffffff;
-  --color-fd-popover-foreground: #1c2430;
-  --color-fd-border: #e6e2d6;
-  --color-fd-primary: #1c2430;
+  --color-fd-popover-foreground: #333333;
+  --color-fd-border: #e6e6e6;
+  --color-fd-primary: #333333;
   --color-fd-primary-foreground: #fdd700;
-  --color-fd-secondary: #f2f0e8;
-  --color-fd-secondary-foreground: #1c2430;
-  --color-fd-accent: #fff4b8;
-  --color-fd-accent-foreground: #1c2430;
+  --color-fd-secondary: #f4f4f4;
+  --color-fd-secondary-foreground: #333333;
+  --color-fd-accent: #fff5bf;
+  --color-fd-accent-foreground: #333333;
   --color-fd-ring: #fdd700;
 }
 
 .dark {
   --ggs-gold-soft: #3a3208;
-  --ggs-text: #c9ccd3;
   --ggs-heading: #f3f1ea;
+  --ggs-text: #c9ccd3;
+  --ggs-hero-bg: #1a1e26;
+  --ggs-hero-fg: #f3f1ea;
+  --ggs-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.6);
 
   --color-fd-background: #12151b;
   --color-fd-foreground: #f3f1ea;
@@ -86,14 +90,13 @@ h3,
 h4 {
   font-family: var(--font-ggs-display), var(--font-ggs-sans), sans-serif;
   color: var(--ggs-heading);
-  letter-spacing: -0.015em;
 }
 
 .prose {
   --tw-prose-body: var(--ggs-text);
 }
 
-/* Links: Tinte mit gelbem Strich, bei Hover wird der Strich zur Markierung */
+/* Links: dunkle Schrift mit gelbem Strich, bei Hover gelb hinterlegt */
 .prose a:not([data-card]) {
   color: var(--ggs-heading);
   font-weight: 500;
@@ -108,22 +111,16 @@ h4 {
   background-color: var(--ggs-gold-soft);
 }
 
-/* Textmarker-Strich unter Abschnittsüberschriften */
+/* Gelbe Zierlinie unter Abschnittsüberschriften, wie auf der Schulhomepage */
 .prose h2 {
-  padding-bottom: 0.35rem;
+  padding-bottom: 0.4rem;
   background-image: linear-gradient(var(--color-ggs-gold), var(--color-ggs-gold));
-  background-size: 2.5rem 4px;
+  background-size: 3rem 3px;
   background-repeat: no-repeat;
   background-position: left bottom;
 }
 
-.prose mark {
-  background: linear-gradient(transparent 45%, var(--color-ggs-gold) 45%);
-  color: inherit;
-  padding-inline: 0.1em;
-}
-
-/* Aktiver Sidebar-Eintrag: gelbe Kante statt eingefärbter Schrift */
+/* Aktiver Sidebar-Eintrag: gelbe Kante und Hinterlegung */
 :is(#nd-sidebar, #nd-sidebar-mobile) a[data-active='true'] {
   background-color: var(--ggs-gold-soft);
   color: var(--ggs-heading);
@@ -136,77 +133,88 @@ h4 {
 .ggs-logo {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-ggs-display), sans-serif;
+  gap: 0.6rem;
   color: var(--ggs-heading);
 }
 
 .ggs-logo-mark {
-  display: inline-block;
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.3rem;
+  display: inline-grid;
+  place-items: center;
+  height: 2rem;
+  padding-inline: 0.45rem;
+  border-radius: 0.35rem;
   background: var(--color-ggs-gold);
-  color: #1c2430;
+  color: #333333;
+  font-family: var(--font-ggs-display), sans-serif;
   font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  transform: rotate(-2deg);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
 }
 
 .ggs-logo-text {
-  font-weight: 600;
-  font-size: 1.05rem;
-}
-
-/* ---- Startseite ---- */
-
-.ggs-home {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  max-width: 56rem;
-  width: 100%;
-  margin-inline: auto;
+  font-family: var(--font-ggs-display), sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.1;
+}
+
+.ggs-logo-sub {
+  font-family: var(--font-ggs-sans), sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+/* ---- Portal ---- */
+
+.ggs-portal {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-bottom: 4rem;
 }
 
 .ggs-hero {
-  padding-top: 1.5rem;
+  padding: 4rem 1rem 3.5rem;
+  background: var(--ggs-hero-bg);
+  color: var(--ggs-hero-fg);
+}
+
+.dark .ggs-hero {
+  border-bottom: 4px solid var(--color-ggs-gold);
+}
+
+.ggs-hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 44rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.ggs-eyebrow,
+.ggs-section-title {
+  font-family: var(--font-ggs-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .ggs-eyebrow {
   margin: 0 0 0.75rem;
   font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-fd-muted-foreground);
 }
 
 .ggs-hero-title {
-  margin: 0;
-  font-size: clamp(2.2rem, 7vw, 3.75rem);
-  font-weight: 800;
-  line-height: 1.05;
-}
-
-.ggs-hero-title mark {
-  background: linear-gradient(transparent 55%, var(--color-ggs-gold) 55%, var(--color-ggs-gold) 92%, transparent 92%);
+  margin: 0 0 2rem;
   color: inherit;
-  padding-inline: 0.05em;
-}
-
-.dark .ggs-hero-title mark {
-  /* Tinte auf Gold ginge nur mit voller Fläche; im Dunkeln trägt Gold die Schrift selbst */
-  background: none;
-  color: var(--color-ggs-gold);
-}
-
-.ggs-hero-lead {
-  max-width: 36rem;
-  margin: 1rem 0 1.75rem;
-  font-size: 1.15rem;
-  line-height: 1.55;
-  color: var(--ggs-text);
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
 .ggs-hero-search {
@@ -214,26 +222,41 @@ h4 {
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  max-width: 36rem;
-  padding: 0.9rem 1rem;
-  border: 2px solid var(--color-fd-border);
-  border-radius: 0.9rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
   background: var(--color-fd-card);
   color: var(--color-fd-muted-foreground);
-  font-size: 1rem;
+  box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.25);
+  font-size: 1.05rem;
   text-align: left;
   cursor: pointer;
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  transition: border-color 120ms ease;
 }
 
 .ggs-hero-search:hover,
 .ggs-hero-search:focus-visible {
-  border-color: var(--color-ggs-gold);
-  box-shadow: 0 0 0 4px var(--ggs-gold-soft);
+  border-color: #333333;
   outline: none;
 }
 
-.ggs-hero-search span {
+.dark .ggs-hero-search {
+  border-color: var(--color-fd-border);
+}
+
+.dark .ggs-hero-search:hover,
+.dark .ggs-hero-search:focus-visible {
+  border-color: var(--color-ggs-gold);
+}
+
+.ggs-hero-search svg {
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  color: var(--ggs-heading);
+}
+
+.ggs-hero-search-text {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -253,39 +276,104 @@ h4 {
   }
 }
 
+.ggs-quick {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.ggs-quick-label {
+  font-weight: 500;
+}
+
+.ggs-chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.7);
+  color: #333333;
+  font-weight: 500;
+  transition: background-color 120ms ease;
+}
+
+.ggs-chip:hover,
+.ggs-chip:focus-visible {
+  background: #ffffff;
+}
+
+.dark .ggs-chip {
+  background: var(--color-fd-muted);
+  color: var(--ggs-heading);
+  border: 1px solid var(--color-fd-border);
+}
+
+.ggs-section,
+.ggs-contact {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
 .ggs-section-title {
-  margin: 0 0 1rem;
-  font-size: 1.35rem;
-  font-weight: 700;
+  margin: 0 0 2rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.ggs-section-title::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 3px;
+  margin: 0.75rem auto 0;
+  background: var(--color-ggs-gold);
 }
 
 .ggs-topics {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 22rem));
+  justify-content: center;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .ggs-topic {
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  height: 100%;
-  padding: 1.1rem 2.75rem 1.1rem 1.1rem;
+  gap: 0.75rem;
+  padding: 1.25rem;
   border: 1px solid var(--color-fd-border);
   border-radius: 0.9rem;
   background: var(--color-fd-card);
-  transition: border-color 120ms ease, transform 120ms ease;
+  box-shadow: var(--ggs-shadow);
 }
 
-.ggs-topic:hover,
-.ggs-topic:focus-visible {
-  border-color: var(--color-ggs-gold);
-  transform: translateY(-2px);
-  outline: none;
+.ggs-topic-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ggs-topic-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.6rem;
+  background: var(--color-ggs-gold);
+  color: #333333;
+}
+
+.ggs-topic-icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
 }
 
 .ggs-topic-name {
@@ -295,37 +383,64 @@ h4 {
   color: var(--ggs-heading);
 }
 
-.ggs-topic-count {
-  font-size: 0.875rem;
-  color: var(--color-fd-muted-foreground);
+.ggs-topic-head:hover .ggs-topic-name,
+.ggs-topic-head:focus-visible .ggs-topic-name {
+  text-decoration: underline;
+  text-decoration-color: var(--color-ggs-gold);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.25em;
 }
 
-.ggs-topic-arrow {
-  position: absolute;
-  top: 50%;
-  right: 1.1rem;
-  translate: 0 -50%;
-  display: grid;
-  place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: 999px;
-  background: var(--color-ggs-gold);
-  color: #1c2430;
-  font-weight: 700;
+.ggs-topic-pages {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-fd-border);
+}
+
+.ggs-topic-pages a {
+  display: block;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--color-fd-border);
+  color: var(--ggs-text);
+  font-size: 0.95rem;
+}
+
+.ggs-topic-pages a:hover,
+.ggs-topic-pages a:focus-visible {
+  color: var(--ggs-heading);
+  box-shadow: inset 3px 0 0 var(--color-ggs-gold);
+  padding-left: 0.6rem;
+  outline: none;
+}
+
+.ggs-topic-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ggs-heading);
+}
+
+.ggs-topic-more svg {
+  width: 1rem;
+  height: 1rem;
 }
 
 .ggs-empty,
-.ggs-home-footer {
-  padding: 1.25rem;
-  border-radius: 0.9rem;
-  background: var(--color-fd-muted);
+.ggs-contact p {
+  max-width: 40rem;
+  margin: 0 auto;
   color: var(--ggs-text);
   line-height: 1.6;
+  text-align: center;
 }
 
 .ggs-empty a,
-.ggs-home-footer a {
+.ggs-contact a {
   color: var(--ggs-heading);
   font-weight: 600;
   text-decoration: underline;
@@ -333,26 +448,6 @@ h4 {
   text-decoration-thickness: 0.18em;
   text-underline-offset: 0.2em;
   overflow-wrap: anywhere;
-}
-
-.ggs-home-footer {
-  background: transparent;
-  border-top: 1px solid var(--color-fd-border);
-  border-radius: 0;
-  padding-inline: 0;
-  font-size: 0.9rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ggs-topic,
-  .ggs-hero-search,
-  .prose a {
-    transition: none;
-  }
-
-  .ggs-topic:hover {
-    transform: none;
-  }
 }
 
 /* ---- Runbook-Kasten ---- */
@@ -376,11 +471,16 @@ h4 {
   list-style: disc;
 }
 
+.ggs-runbook li {
+  margin-block: 0.15rem;
+}
+
 .ggs-runbook-label {
-  margin: 0 0 0.35rem;
-  font-size: 0.75rem;
+  margin: 0 0 0.35rem !important;
+  font-family: var(--font-ggs-display), sans-serif;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-fd-muted-foreground);
 }
@@ -399,7 +499,15 @@ h4 {
 }
 
 .ggs-runbook-id {
-  margin: 0;
+  margin: 0 !important;
   font-size: 0.8rem;
   color: var(--color-fd-muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ggs-hero-search,
+  .ggs-chip,
+  .prose a {
+    transition: none;
+  }
 }

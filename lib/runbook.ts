@@ -25,6 +25,8 @@ export type Runbook = z.infer<typeof runbookSchema>;
 export const docAccessFields = {
   roles: z.array(z.enum(DOC_ROLES)).optional(),
   order: z.number().optional(),
+  /** Erscheint auf der Startseite unter „Häufig gesucht". */
+  featured: z.boolean().optional(),
   runbook: runbookSchema.optional(),
 };
 
