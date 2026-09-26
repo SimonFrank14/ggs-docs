@@ -1,22 +1,22 @@
-import { Roboto, Roboto_Slab, Montserrat } from 'next/font/google';
+import { Bricolage_Grotesque, Figtree, JetBrains_Mono } from 'next/font/google';
 
-export const roboto = Roboto({
+// next/font lädt die Schriften zur Build-Zeit und liefert sie selbst aus.
+// Zur Laufzeit geht keine Anfrage an Google (Doku-Spec §6.2).
+
+export const figtree = Figtree({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
   variable: '--font-ggs-sans',
   display: 'swap',
 });
 
-export const robotoSlab = Roboto_Slab({
+export const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-ggs-serif',
+  variable: '--font-ggs-display',
   display: 'swap',
 });
 
-export const montserrat = Montserrat({
+export const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['600'],
-  variable: '--font-ggs-nav',
+  variable: '--font-ggs-mono',
   display: 'swap',
 });

@@ -1,13 +1,17 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { ReactNode } from 'react';
-import { docsSource } from '@/lib/source';
+import { Logo } from '@/components/logo';
+import { visibleTree } from '@/lib/source';
+import { getViewer } from '@/lib/viewer';
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({ children }: { children: ReactNode }) {
+  const viewer = await getViewer();
+
   return (
     <DocsLayout
-      tree={docsSource.pageTree}
+      tree={visibleTree(viewer)}
       nav={{
-        title: 'GGS Dokumentation',
+        title: <Logo />,
         url: '/',
       }}
       links={[
