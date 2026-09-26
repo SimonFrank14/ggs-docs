@@ -1,0 +1,43 @@
+---
+title: Runbooks
+description: Was bei wiederkehrenden Support-Anlässen zu tun ist — für das IT-Team und den KI-Assistenten in Zammad
+roles: [admin]
+order: 90
+---
+
+Ein Runbook beschreibt für **einen** Anlass, woran man ihn erkennt und was zu tun ist. Es ist für zwei Leser geschrieben:
+
+- **Agenten im IT-Support**, die ein Ticket bearbeiten
+- **den KI-Assistenten** in Zammad, der zu einem Ticket das passende Runbook sucht und einen Vorschlag als interne Notiz schreibt
+
+Beide lesen denselben Text. Deshalb gilt: so schreiben, dass eine neue Kollegin es ohne Rückfrage befolgen kann.
+
+## Aufbau eines Runbooks
+
+Jedes Runbook trägt im Frontmatter einen `runbook`-Block:
+
+```yaml
+runbook:
+  id: shared-ipad-cache-leeren        # stabil, ändert sich nie
+  anlass:                             # woran man den Fall erkennt
+    - Shared iPad meldet „Speicher voll"
+  stichworte: [ipad, shared, speicher]
+  werkzeuge: [jamf.shared_ipad.cache_leeren]
+```
+
+Der Build bricht ab, wenn ein Runbook öffentlich ist, keinen Anlass hat oder eine ID doppelt vergeben ist.
+
+## Werkzeuge und Freigaben
+
+`werkzeuge` nennt die Werkzeuge des Tool-Gateways, die das Runbook benutzt. Die Liste ist ein **Hinweis**, keine Berechtigung. Ob ein Werkzeug sofort läuft oder erst nach Freigabe, legt das Gateway fest — ein Runbook kann das nicht ändern, auch nicht durch einen Satz im Text.
+
+| Stufe | Bedeutung | Ausführung |
+|---|---|---|
+| 0 — Lesen | ändert nichts | sofort |
+| 1 — Notieren | interne Notiz, Tag, Entwurf in Zammad | sofort |
+| 2 — Handeln | ändert Jamf, Entra ID oder schreibt einem Menschen | nur nach Freigabe durch einen Agenten |
+| 3 — Verboten | Löschen, Rechte vergeben, Massenaktionen | gibt es als Werkzeug nicht |
+
+## Personenbezogene Daten
+
+Der Assistent sieht Namen, Mailadressen und Seriennummern nie im Klartext, sondern als Platzhalter wie `«PERSON_1»` oder `«GERAET_1»`. Schreibe Runbooks deshalb ohne echte Namen und ohne echte Gerätedaten — Beispiele immer mit erfundenen Werten.

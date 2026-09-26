@@ -1,0 +1,44 @@
+---
+title: Shared iPad – Cache leeren
+description: Wenn ein geteiltes iPad voll läuft oder Daten eines vorherigen Nutzers zeigt
+roles: [admin]
+order: 10
+runbook:
+  id: shared-ipad-cache-leeren
+  anlass:
+    - Ein Shared iPad meldet „Speicher voll" oder lässt keine Anmeldung mehr zu
+    - Nach der Anmeldung sind Dateien oder Konten eines vorherigen Nutzers sichtbar
+    - Die Anmeldung an einem Shared iPad dauert ungewöhnlich lange
+  stichworte: [ipad, shared ipad, speicher, cache, anmeldung, klassensatz]
+  werkzeuge: [jamf.geraet.suchen, jamf.shared_ipad.cache_leeren]
+---
+
+Shared iPads halten die Daten zuletzt angemeldeter Nutzer lokal vor. Läuft dieser Zwischenspeicher voll, scheitern neue Anmeldungen. Das Leeren entfernt alle lokal gespeicherten Nutzerdaten vom Gerät.
+
+<Callout type="warn" title="Nicht synchronisierte Daten gehen verloren">
+Was ein Schüler auf dem Gerät gespeichert, aber noch nicht in iCloud oder OneDrive synchronisiert hat, ist nach dem Leeren weg. Vor dem Leeren beim Kunden nachfragen, ob das in Ordnung ist.
+</Callout>
+
+## 1. Gerät bestimmen
+
+Aus dem Ticket die Seriennummer oder die Inventarnummer des Geräts entnehmen. Fehlt sie, beim Kunden nachfragen — auf der Rückseite oder unter **Einstellungen → Allgemein → Info**.
+
+Werkzeug `jamf.geraet.suchen` (Stufe 0) liefert das Gerät in Jamf School samt Modell und freiem Speicher. Wird kein oder mehr als ein Gerät gefunden, nicht weitermachen, sondern nachfragen.
+
+## 2. Cache leeren
+
+Werkzeug `jamf.shared_ipad.cache_leeren` (Stufe 2, **Freigabe nötig**) leert den Cache genau dieses einen Geräts.
+
+<Callout type="error" title="Nicht die Aktion in ggs-admin verwenden">
+Die Aktion „Clear Cache Shared iPad" in ggs-admin leert den Cache **aller** Geräte in Jamf School auf einmal. Für ein einzelnes Ticket ist sie falsch.
+</Callout>
+
+Ohne Gateway geht dasselbe über die Jamf-School-API mit genau **einer** UDID: `POST devices/bulk/clearcache` mit `{ "ids": ["<UDID>"] }` — das ist der Aufruf, den `JamfClearSharedIPadCache` in ggs-admin macht.
+
+## 3. Rückmeldung
+
+Das Gerät muss online sein, damit der Befehl ankommt. Nach wenigen Minuten sollte die Anmeldung wieder funktionieren. Antwort an den Kunden:
+
+> Wir haben den Speicher des iPads geleert. Bitte das iPad einmal neu starten und dich dann wieder anmelden. Falls es weiterhin nicht klappt, antworte einfach auf diese Nachricht.
+
+Klappt es danach nicht, Ticket an die Gruppe mit Jamf-Zugang eskalieren und im Ticket vermerken, dass der Cache bereits geleert wurde.

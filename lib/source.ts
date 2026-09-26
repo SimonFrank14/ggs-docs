@@ -1,5 +1,6 @@
 import { loader } from 'fumadocs-core/source';
 import { docs } from '@/.source';
+import { canAccess, filterTree, type Viewer } from './access';
 
 // fumadocs-mdx 11.10.1 widerspricht sich zwischen Laufzeit und Typdeklaration:
 // - Laufzeit (node_modules/fumadocs-mdx/dist/chunk-UOOPSLFY.js:45-51,
@@ -20,3 +21,16 @@ export const docsSource = loader({
     files: rawSource.files(),
   },
 });
+
+export type DocsPage = ReturnType<typeof docsSource.getPages>[number];
+
+/** Alle Seiten, die `viewer` sehen darf. Einziger Weg an die Seitenliste für Ausgaben. */
+export function visiblePages(viewer: Viewer | null): DocsPage[] {
+  return docsSource.getPages().filter((page) => canAccess(page.data, viewer));
+}
+
+/** Der Navigationsbaum, gefiltert auf die Seiten, die `viewer` sehen darf. */
+export function visibleTree(viewer: Viewer | null) {
+  const urls = new Set(visiblePages(viewer).map((page) => page.url));
+  return filterTree(docsSource.pageTree, (url) => urls.has(url));
+}
