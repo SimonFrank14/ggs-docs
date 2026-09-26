@@ -21,12 +21,13 @@ Leitplanke: **Das Modell bekommt so wenig personenbezogene Daten wie möglich.**
 | # | Frage | Entscheidung |
 |---|---|---|
 | E1 | Wo läuft das Modell? | **Externer Anbieter** (z. B. Claude über die API) mit AVV, Daten **pseudonymisiert**. Die Weiche auf ein lokales Modell bleibt vorgesehen (§7.3). |
-| E2 | Wo laufen die Werkzeuge? | **Eigenes Tool-Gateway** als eigener Dienst mit MCP-Schnittstelle. Nicht in Windmill, nicht in ggs-admin. |
+| E2 | Wo laufen die Werkzeuge? | **Eigenes Tool-Gateway** als eigener Dienst mit MCP-Schnittstelle. Nicht in ggs-admin. Ausgeführt werden die Werkzeuge in Windmill (E4). |
 | E3 | Design der Doku | Neu: eigene Startseite, Farbkonzept und Typografie (§9). |
+| E4 | Wie laufen die Skripte? | **Windmill führt aus, das Gateway entscheidet** (§2.1). Windmill hält Skripte, Zugangsdaten, Zeitpläne und Formulare für Menschen. Das Gateway hält Pseudonymisierung, Tresor, Stufen, Profile, Freigaben und Audit. Das Modell erreicht Windmill nie direkt. |
 
 **E1 ändert eine Annahme der Bridge-Spec.** Dort (§12) steht, der Triage-Agent laufe mit lokalem Modell, deshalb komme kein Auftragsverarbeiter dazu. Mit E1 kommt einer dazu. Die Konsequenzen stehen in §7.
 
-**E2 ersetzt den Windmill-Vorschlag der Bridge-Spec** (§1.1, §12). Das Anhalten und Fortsetzen eines Laufs ist hier eine einzige Tabelle (§6.3). Dafür braucht es keinen Workflow-Runner, und der Durchsetzungspunkt für Freigaben liegt im selben Prozess wie die Werkzeuge.
+**E4 präzisiert den Windmill-Vorschlag der Bridge-Spec** (§1.1, §12). Dort sollte der Freigabeschritt in Windmill liegen. Hier bleibt die Freigabe für alles, was der Assistent anstößt, im Gateway, weil nur dort Hash-Bindung, Identitätsprüfung (§6.7) und die einmalige Anzeige von Geheimnissen (§6.1) an einer Stelle zusammenkommen. Windmills eigene Freigabeschritte nutzen nur Abläufe, die **nicht** vom Assistenten kommen: Zeitpläne und Läufe, die ein Mensch in Windmill startet (§2.1).
 
 ### 1.2 Begriffe
 
@@ -55,19 +56,45 @@ Ergänzt die Begriffstabelle der Bridge-Spec. Jedes Ding hat genau einen Namen.
         └────────────┘  interne Notiz, Tags,          │  Werkzeug-Register           │
               ▲         Entwurf (nie gesendet)        │  Freigabe-Tabelle            │
               │                                       │  Audit-Log                   │
-              │ Agent gibt frei                       └──┬──────┬──────┬──────┬──────┘
-              │ (Link in der Notiz,                      │      │      │      │
-              │  oder Karte in Teams)          Modell-API│  Jamf│ Graph│  ggs-docs
-              │                                (nur      │      │      │ (Runbooks,
-        ┌────────────┐                         Platz-    ▼      ▼      ▼  rollengefiltert)
-        │   Agent    │                         halter)
-        └────────────┘
+              │ Agent gibt frei                       └──┬─────────────┬──────────┬──────┘
+              │ (Link in der Notiz,                      │             │          │
+              │  oder Karte in Teams)          Modell-API│    Windmill-│   ggs-docs
+              │                                (nur      │    API      │  (Runbooks,
+        ┌────────────┐                         Platz-    ▼             ▼   rollengefiltert)
+        │   Agent    │                         halter)            ┌──────────────────────────┐
+        └────────────┘                                            │         Windmill         │
+                                                                  │  Skripte f/gateway/*     │
+                                                                  │  Zugangsdaten (Resources)│
+                                                                  │  Zeitpläne, Formulare    │
+                                                                  └──┬──────┬──────┬──────┬──┘
+                                                                     ▼      ▼      ▼      ▼
+                                                                   Jamf  Graph  Coolify SchILD
 ```
 
 - **Ein Prozess**, TypeScript, wie die Bridge. PostgreSQL für Tresor, Freigaben und Audit (kein SQLite: der Tresor ist sicherheitsrelevant und braucht Verschlüsselung auf Spaltenebene und Backups).
-- Das Gateway spricht **nur** über seine Werkzeuge mit Jamf, Graph und Zammad. Das Modell hat keinen Netzwerkzugang und keinen freien HTTP-Aufruf.
+- Das Gateway spricht mit Jamf, Graph, Coolify und SchILD **nur über Windmill-Skripte**, mit Zammad direkt. Das Modell hat keinen Netzwerkzugang und keinen freien HTTP-Aufruf.
 - Die Bridge bleibt KI-frei (Bridge-Spec §1.5). Das Gateway hängt mit einem **eigenen** Webhook und einem **eigenen** Zammad-Benutzer an Zammad, nicht an der Bridge.
 - MCP ist die Schnittstelle nach außen. Dasselbe Gateway lässt sich deshalb später auch aus dem Admin-Arbeitsplatz ansprechen (§8), mit denselben Stufen und derselben Freigabe.
+
+### 2.1 Aufgabenteilung Gateway ↔ Windmill
+
+| Gehört ins Gateway | Gehört in Windmill |
+|---|---|
+| Werkzeug-Register: Name, Stufe, Merkmale, Eingabe-/Ausgabeschema, `personenbezogen`, Profil | Das Skript, das die Arbeit tut, je Werkzeug eins unter `f/gateway/<bereich>/<werkzeug>` |
+| Pseudonymisierung, Tresor, Auflösen der Platzhalter vor dem Aufruf | Zugangsdaten für Jamf, Graph, Coolify, SchILD als Windmill-Resources — das Gateway kennt sie **nicht** |
+| Freigaben für alles, was der Assistent anstößt | Freigabeschritte für Zeitpläne und von Menschen gestartete Abläufe (z. B. Zertifikatserneuerung) |
+| Profile, Anmeldung pro Person, Audit | Zeitpläne (Zertifikats-Check, nächtliche Abgleiche), Lauf-Logs der Skripte |
+| MCP-Schnittstelle zum Assistenten | Automatisch erzeugte Formulare, mit denen Admins ein Skript ohne KI starten |
+
+**Der Aufruf:** Das Gateway löst die Platzhalter auf, prüft Stufe und Freigabe und startet dann das Windmill-Skript über die API mit einem eigenen Token. Das Ergebnis pseudonymisiert es nach der Deklaration im Register, bevor es an das Modell geht. Die Stufe steht **im Gateway**, nicht in Windmill — ein Skript in Windmill kann sich keine niedrigere Stufe geben.
+
+**Das Windmill-Token des Gateways** darf nur Skripte im Ordner `f/gateway` ausführen, nichts anlegen oder ändern. Den Ordner dürfen nur Admins bearbeiten. Windmills eigene MCP-Schnittstelle bleibt **abgeschaltet**; sonst gäbe es einen zweiten Weg vom Modell zu den Skripten, an Tresor und Stufen vorbei.
+
+**Skripte unter Versionskontrolle:** Windmill synchronisiert `f/gateway` mit einem Git-Repo. Änderungen an Skripten laufen als PR mit Review, wie Code (§6.5, Sicherheitsupdates). Ein Skript, das in Windmill direkt geändert wurde und vom Repo abweicht, meldet der Abgleich.
+
+**Geheimnisse in Ergebnissen:** Windmill speichert Ergebnisse und Logs jedes Laufs in seiner Datenbank. Ein Einmalpasswort oder Bypass-Code (`geheim`, §6.1) darf dort nicht im Klartext stehen. Deshalb verschlüsselt ein `geheim`-Skript den Wert mit dem **öffentlichen Schlüssel des Gateways**, bevor es ihn zurückgibt; nur das Gateway kann ihn lesen. Dazu: Aufbewahrung der Lauf-Ergebnisse in Windmill kurz halten (Voreinstellung prüfen, Ziel 7 Tage) und in Skripten nichts Personenbezogenes loggen.
+
+**Nebeneffekt:** Die Jamf- und Graph-Aktionen von ggs-admin (Abgleich Graph → Jamf, Geräte aktualisieren) können als Windmill-Skripte mit Zeitplan nachgebaut werden. Ob ggs-admin damit abgelöst wird, ist eine eigene Entscheidung (§12 Nr. 13).
 
 ---
 
@@ -270,7 +297,7 @@ Die ersten Werkzeuge der Stufe 2 orientieren sich an den bestehenden `ACTION_TYP
 - `CLEAR_CACHE_SHARED_IPAD_JAMF` ruft `JamfClearAllSharedIPadsCache` und leert den Cache **aller** Geräte in Jamf School (`POST devices/bulk/clearcache` mit allen UDIDs). Für ein Ticket braucht es die Einzelvariante; `JamfClearSharedIPadCache(deviceId)` existiert bereits und ist die Vorlage für `jamf.shared_ipad.cache_leeren`. Die Massenvariante wird **kein** Werkzeug — sie ist Stufe 3.
 - `CLEAR_TEACHER_RESTRICTIONS_JAMF` ist im Enum angelegt, aber nicht umgesetzt: die Funktion ist auskommentiert und zeigte auf denselben `clearcache`-Endpunkt. Vor einem Werkzeug `jamf.lehrer_einschraenkungen.aufheben` muss der richtige Jamf-School-Endpunkt geklärt werden.
 
-Das Gateway ruft die Jamf-API direkt auf, nicht ggs-admin — ggs-admin hat heute keine API für Einzelaufrufe und keine Authentifizierung für Dienste. Die Jamf-Zugangsdaten werden aus der ggs-admin-Datenbank in die Gateway-Umgebung übernommen, nicht geteilt.
+Die Jamf-Werkzeuge sind Windmill-Skripte, die die Jamf-School-API direkt aufrufen, nicht ggs-admin — ggs-admin hat heute keine API für Einzelaufrufe und keine Authentifizierung für Dienste. Die Aufrufe aus `api/jamf.ts` von ggs-admin sind die Vorlage. Die Jamf-Zugangsdaten werden als Windmill-Resource angelegt, nicht aus der ggs-admin-Datenbank geteilt.
 
 ### 6.2 Was eine Freigabe bindet
 
@@ -293,7 +320,7 @@ Modell ruft Stufe-2-Werkzeug
   → Modell beendet seinen Zug; Notiz in Zammad zeigt den offenen Schritt
 Agent klickt „Freigeben"
   → Gateway prüft: angemeldet, Rolle IT-Support, nicht abgelaufen, Hash stimmt
-  → Gateway führt das Werkzeug aus (nicht das Modell)
+  → Gateway startet das Windmill-Skript des Werkzeugs (nicht das Modell)
   → Ergebnis ins Audit, Notiz in Zammad aktualisieren
   → optional: Lauf fortsetzen, damit das Modell den Antwortentwurf anpasst
 ```
@@ -351,7 +378,7 @@ Kein Ticket-Anlass, sondern ein **Termin**. Die Signaturzertifikate der SSO-Anwe
 | Neues Zertifikat anlegen (inaktiv) | `graph.sso_zertifikat.erneuern` | 2 | legt das neue Zertifikat an, aktiviert es **nicht** |
 | Neues Zertifikat aktivieren | `graph.sso_zertifikat.aktivieren` | 2 | erst, wenn der Dienstanbieter die neuen Metadaten hat — sonst bricht der Login für alle |
 
-Ablauf: Ein täglicher Lauf prüft die Ablaufdaten und legt **30 Tage vorher** ein Zammad-Ticket an, je Anwendung eins. Der Assistent schlägt das Runbook der Anwendung vor, legt das Zertifikat nach Freigabe an und listet, was auf der Seite des Dienstanbieters zu tun ist. Die Aktivierung gibt ein Agent frei, nachdem er das erledigt hat. Jede Anwendung braucht ein eigenes Runbook, weil der Schritt beim Dienstanbieter überall anders ist.
+Ablauf: Ein täglicher Windmill-Zeitplan prüft die Ablaufdaten und legt **30 Tage vorher** ein Zammad-Ticket an, je Anwendung eins. Der Assistent schlägt das Runbook der Anwendung vor, legt das Zertifikat nach Freigabe an und listet, was auf der Seite des Dienstanbieters zu tun ist. Die Aktivierung gibt ein Agent frei, nachdem er das erledigt hat. Jede Anwendung braucht ein eigenes Runbook, weil der Schritt beim Dienstanbieter überall anders ist.
 
 #### Server (Portainer, künftig Coolify)
 
@@ -470,7 +497,7 @@ Zusätzlich zum Katalog in §6.5, nur im Admin-Profil:
 
 Auch im Admin-Profil bleibt Stufe 3: Volumes und Datenbanken löschen, Server-Shell, Änderungen an Coolify selbst (Server, Teams, Tokens), Änderungen am Gateway und an seinen Positivlisten. Das sind Dinge, die ein Admin in der Coolify-Oberfläche selbst tut — dort, wo er sieht, was er anrichtet, und nicht über einen Assistenten, der von einem Log-Eintrag umgelenkt worden sein kann.
 
-Das Coolify-Token des Gateways ist ein eigenes Team-Token, nicht das eines Admins. Welche Admin-Person eine Aktion ausgelöst hat, steht im Audit-Log des Gateways.
+Das Coolify-Token liegt als Windmill-Resource und ist ein eigenes Team-Token, nicht das eines Admins. Welche Admin-Person eine Aktion ausgelöst hat, steht im Audit-Log des Gateways.
 
 ### 8.4 Bestätigung im Admin-Profil
 
@@ -529,7 +556,7 @@ Unabhängig von den Doku-Phasen nummeriert (G = Gateway). G1 kann parallel zu Do
 | Phase | Inhalt | Ergebnis |
 |---|---|---|
 | **D-jetzt** | `canAccess` fail-closed (ohne Login), Runbook-Frontmatter-Vertrag, erste Runbooks, Such-Route nur über `public`, neues Design | Runbooks können geschrieben werden, ohne öffentlich zu werden |
-| **G1 — Gerüst** | Gateway-Repo, Werkzeug-Register mit Stufen, Tresor, Pseudonymisierung für Zammad-Kundenobjekt und Muster, Audit, nur Stufe 0 und 1, Zammad-Webhook, interne Notiz | Vorschläge in Zammad, keine Aktionen |
+| **G1 — Gerüst** | Gateway-Repo, Windmill-Instanz mit Ordner `f/gateway` und Git-Sync, erste Lese-Skripte, Werkzeug-Register mit Stufen, Tresor, Pseudonymisierung für Zammad-Kundenobjekt und Muster, Audit, nur Stufe 0 und 1, Zammad-Webhook, interne Notiz | Vorschläge in Zammad, keine Aktionen |
 | **G2 — Freigaben** | Freigabe-Tabelle, Freigabeseite mit Entra-Login, erste Stufe-2-Werkzeuge (Jamf: Cache eines Shared iPad leeren, Inventar aktualisieren) | Routineaktionen mit einem Klick |
 | **G3 — Breite** | Übrige Jamf-Werkzeuge aus §6.5, Graph-Werkzeuge mit Identitätsprüfung (§6.7), `geheim`-Anzeige, Verzeichnisabgleich in der Pseudonymisierung, Karte im Agenten-Channel über die Bridge, Weiche mit lokalem Modell | Mehr Anlässe, zweiter Freigabeweg |
 | **G3b — Betrieb** | `server.*` mit Portainer-Adapter, dann Coolify-Adapter; täglicher Zertifikatslauf mit Tickets | Server- und Zertifikatsaufgaben über Zammad |
@@ -567,5 +594,7 @@ Sortiert nach Schadenshöhe, wie Doku-Spec §8.1:
 | 8 | Schnittstelle zu SchILD | SchILD-NRW 3 mit SVWS-Server (REST) oder direkter Datenbankzugriff (nur lesend, eigener DB-Nutzer mit Views auf die nötigen Felder). Klären vor `schild.*` |
 | 9 | Endpunkte in Jamf School für Code-Sperre, Bypass-Code, Ortung, Lehrer-Einschränkungen | Gegen die Jamf-School-API-Doku prüfen, bevor die Werkzeuge gebaut werden |
 | 10 | Laufzeit der SSO-Zertifikate | Laut IT-Team sechs Monate; Entra ID erzeugt SAML-Signaturzertifikate standardmäßig mit drei Jahren. Welche Anwendungen betroffen sind und woher die sechs Monate kommen, in `graph.sso_zertifikat.status` sichtbar machen |
-| 11 | Windmill statt eigenem Werkzeug-Runner? | Abwägung am 2026-09-26 begonnen: Windmill als Runner für Skripte, Zeitpläne und Freigaben, davor ein dünnes Gateway für Pseudonymisierung, Tresor und Stufen. Entscheidung vor G1 |
+| 11 | ~~Windmill statt eigenem Werkzeug-Runner?~~ | **Entschieden am 2026-09-26:** Windmill führt aus, das Gateway entscheidet (E4, §2.1) |
 | 12 | Oberfläche des Admin-Arbeitsplatzes | Weg A, B oder beide (§8.2). Bei B: LibreChat oder Open WebUI — Kriterium ist MCP-Anmeldung pro Person, nicht die Oberfläche |
+| 13 | Löst Windmill die Aktionen und den Scheduler von ggs-admin ab? | Naheliegend, weil dieselben Jamf-/Graph-Aufrufe dann doppelt existieren. Entscheidung nach G2, wenn die ersten Skripte laufen |
+| 14 | Windmill-Edition | Community-Edition prüfen gegen: Entra-SSO für die Admins, Rechte pro Ordner, Git-Sync, Aufbewahrungsfristen. Was davon nur die Enterprise-Edition kann, vor G1 klären |
