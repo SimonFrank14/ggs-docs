@@ -1,0 +1,34 @@
+---
+title: iPad – Inventar in Jamf aktualisieren
+description: Wenn Jamf School veraltete Angaben zu einem Gerät zeigt oder zugewiesene Apps nicht ankommen
+roles: [admin]
+order: 20
+runbook:
+  id: geraet-inventar-aktualisieren
+  anlass:
+    - Eine zugewiesene App erscheint nicht auf dem iPad
+    - Jamf School zeigt für ein Gerät veraltete Angaben (iOS-Version, Speicher, Nutzer)
+    - Ein Profil oder eine Einschränkung greift auf einem Gerät nicht
+  stichworte: [ipad, jamf, app fehlt, profil, inventar, aktualisieren]
+  werkzeuge: [jamf.geraet.suchen, jamf.geraet.aktualisieren]
+---
+
+Jamf School kennt ein Gerät nur so, wie es sich zuletzt gemeldet hat. Eine Aktualisierung fordert das Gerät auf, sich sofort zu melden und ausstehende Befehle abzuholen. Auf dem Gerät geht dabei nichts verloren.
+
+## 1. Gerät bestimmen
+
+Wie im Runbook [Shared iPad – Cache leeren](/runbooks/shared-ipad-cache-leeren#1-gerät-bestimmen): Seriennummer oder Inventarnummer aus dem Ticket, dann `jamf.geraet.suchen` (Stufe 0).
+
+Das Ergebnis zeigt, wann sich das Gerät zuletzt gemeldet hat. Liegt das mehrere Tage zurück, ist das Gerät vermutlich aus, nicht im WLAN oder nicht mehr verwaltet — dann hilft eine Aktualisierung nicht, und der Kunde soll das Gerät einschalten und mit dem Schul-WLAN verbinden.
+
+## 2. Aktualisierung anstoßen
+
+Werkzeug `jamf.geraet.aktualisieren` (Stufe 2, **Freigabe nötig**). In Jamf School entspricht das dem Befehl zum Aktualisieren des Inventars am Gerät; ggs-admin nutzt dafür denselben Endpunkt.
+
+Die Freigabe ist hier eine Formsache, die Aktion ist harmlos. Sie ist trotzdem Stufe 2, weil sie ein System außerhalb von Zammad anspricht — die Stufen richten sich nach dem Ziel, nicht nach dem Einzelfall.
+
+## 3. Rückmeldung
+
+> Wir haben dein iPad aufgefordert, sich bei der Geräteverwaltung zu melden. Bitte lass es eingeschaltet und im Schul-WLAN. Die App sollte in den nächsten Minuten erscheinen.
+
+Erscheint die App nach einer Stunde nicht, in Jamf School prüfen, ob sie dem Gerät oder seiner Gruppe überhaupt zugewiesen ist, und ob genug Lizenzen im Apple School Manager frei sind.

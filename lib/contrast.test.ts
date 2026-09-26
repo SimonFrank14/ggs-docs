@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { contrastRatio } from './contrast';
 
 const WHITE = '#ffffff';
+const AA = 4.5;
 
 describe('contrastRatio', () => {
   it('berechnet den Maximalkontrast Schwarz auf Weiß', () => {
@@ -13,39 +14,37 @@ describe('contrastRatio', () => {
   });
 });
 
-describe('GGS-Farbtokens gegen WCAG AA', () => {
-  it('belegt, dass die Markenfarben als Textfarbe durchfallen', () => {
-    expect(contrastRatio('#D2A500', WHITE)).toBeLessThan(4.5);
-    expect(contrastRatio('#FDD700', WHITE)).toBeLessThan(4.5);
-  });
-
-  it('erfüllt mit der abgeleiteten Linkfarbe AA für Fließtext', () => {
-    expect(contrastRatio('#8A6A00', WHITE)).toBeGreaterThanOrEqual(4.5);
-  });
-
-  it('erfüllt mit der Fließtextfarbe AA', () => {
-    expect(contrastRatio('#626262', WHITE)).toBeGreaterThanOrEqual(4.5);
+describe('Warum Gold keine Textfarbe ist', () => {
+  it('belegt, dass die Markenfarben als Textfarbe auf Weiß durchfallen', () => {
+    expect(contrastRatio('#D2A500', WHITE)).toBeLessThan(AA);
+    expect(contrastRatio('#FDD700', WHITE)).toBeLessThan(AA);
   });
 });
 
-describe('GGS-Farbtokens im Dunkelmodus gegen WCAG AA', () => {
-  // Fumadocs-Dunkelhintergrund, aus node_modules/fumadocs-ui/dist/style.css,
-  // .dark { --color-fd-background: hsl(0, 0%, 7.04%) } ≈ #121212.
-  const DARK_BG = '#121212';
+// Paarungen aus app/global.css (Runbook-Spec §9)
+const pairs: Array<[string, string, string]> = [
+  // Hellmodus
+  ['Überschrift/Link auf Weiß', '#333333', '#FFFFFF'],
+  ['Fließtext auf Weiß', '#4D4D4D', '#FFFFFF'],
+  ['gedämpfter Text auf Weiß', '#626262', '#FFFFFF'],
+  ['gedämpfter Text auf Muted', '#626262', '#F4F4F4'],
+  ['Überschrift auf aktivem Eintrag (Gold soft)', '#333333', '#FFF5BF'],
+  ['Hero: Überschrift auf Gold', '#333333', '#FDD700'],
+  ['Chip: Überschrift auf Weiß 70 % über Gold', '#333333', '#FEF3B3'],
+  ['Gold auf Überschriftfarbe (Primär-Button)', '#FDD700', '#333333'],
+  // Dunkelmodus
+  ['Überschrift auf Dunkel', '#F3F1EA', '#12151B'],
+  ['Fließtext auf Dunkel', '#C9CCD3', '#12151B'],
+  ['gedämpfter Text auf Dunkel', '#A3A9B4', '#12151B'],
+  ['gedämpfter Text auf Dunkel-Muted', '#A3A9B4', '#1A1E26'],
+  ['Hero-Überschrift auf Dunkel-Hero', '#F3F1EA', '#1A1E26'],
+  ['Gold als Primärfarbe auf Dunkel', '#FDD700', '#12151B'],
+  ['Dunkel auf Gold (Primär-Button)', '#12151B', '#FDD700'],
+  ['Überschrift auf aktivem Eintrag (Dunkel)', '#F3F1EA', '#3A3208'],
+];
 
-  it('belegt, dass die Hellmodus-Linkfarbe im Dunkelmodus AA verfehlt', () => {
-    expect(contrastRatio('#8A6A00', DARK_BG)).toBeLessThan(4.5);
-  });
-
-  it('erfüllt mit der helleren Dunkelmodus-Goldvariante AA für Fließtext', () => {
-    expect(contrastRatio('#A37E00', DARK_BG)).toBeGreaterThanOrEqual(4.5);
-  });
-
-  it('belegt, dass Weiß auf der Dunkelmodus-Goldvariante als Textfarbe AA verfehlt', () => {
-    expect(contrastRatio(WHITE, '#A37E00')).toBeLessThan(4.5);
-  });
-
-  it('erfüllt mit dunklem Vordergrund auf der Dunkelmodus-Goldvariante AA', () => {
-    expect(contrastRatio('#171717', '#A37E00')).toBeGreaterThanOrEqual(4.5);
+describe('GGS-Farbtokens gegen WCAG AA', () => {
+  it.each(pairs)('%s', (_name, fg, bg) => {
+    expect(contrastRatio(fg, bg)).toBeGreaterThanOrEqual(AA);
   });
 });

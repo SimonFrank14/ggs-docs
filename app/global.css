@@ -1,79 +1,513 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/style.css';
 
+/*
+ * Angelehnt an die Schulhomepage (Doku-Spec §6.1), etwas moderner:
+ * Gelb als Fläche hinter dunkler Schrift, #333 für Überschriften, Roboto für
+ * Text, Montserrat für Überschriften und gesperrte Versalien, Kartenraster.
+ * Gelb ist nie Textfarbe auf Weiß (1,4:1). Alle Paarungen stehen in
+ * lib/contrast.test.ts.
+ */
 @theme {
-  /* Aus dem Elementor-Kit der Live-Seite extrahiert */
-  --color-ggs-primary: #fdd700;      /* Flächen, Buttons, Zierlinien */
-  --color-ggs-secondary: #333333;    /* Überschriften */
-  --color-ggs-text: #626262;         /* Fließtext, Navigation */
-  --color-ggs-accent: #dfc15e;       /* gedämpftes Gold */
-  --color-ggs-surface: #eeeeee;
-
-  /* Abgeleitet: erfüllt WCAG AA auf Weiß, siehe lib/contrast.test.ts */
-  --color-ggs-link: #8a6a00;
-
-  /*
-   * Eigene, hellere Goldvariante für den Dunkelmodus: #8a6a00 erreicht auf dem
-   * Fumadocs-Dunkelhintergrund (#121212) nur 3,70:1 und verfehlt WCAG AA.
-   * #a37e00 erreicht dort 4,94:1, siehe lib/contrast.test.ts. Zwei Werte statt
-   * einem, weil ein einziges Gold nicht gleichzeitig auf Weiß UND auf #121212
-   * AA-Kontrast erreichen kann.
-   */
-  --color-ggs-link-dark: #a37e00;
+  --color-ggs-gold: #fdd700;
+  --color-ggs-ink: #333333;
 
   --font-ggs-sans: var(--font-ggs-sans);
-  --font-ggs-serif: var(--font-ggs-serif);
-  --font-ggs-nav: var(--font-ggs-nav);
+  --font-ggs-display: var(--font-ggs-display);
+  --font-ggs-mono: var(--font-ggs-mono);
 }
 
 /*
- * Fumadocs-Überschreibungen bewusst NICHT im @theme-Block oben:
- * fumadocs-ui/style.css bringt --color-fd-primary bereits vorkompiliert
- * in einem eigenen @layer-theme-Block mit und steht in dieser Datei nach
- * @import 'tailwindcss'. Eine erneute Deklaration im @theme-Block landet
- * im selben Layer und verliert gegen die spätere Bibliotheksdeklaration.
- * Als normale :root-Deklaration (unlayered) gewinnt sie zuverlässig.
- * Weiß (#ffffff) als Vordergrundfarbe liegt bei ca. 5:1 auf --color-ggs-link
- * und wird von Fumadocs als Textfarbe auf --color-fd-primary-Hintergrund
- * verwendet (.text-fd-primary-foreground neben .bg-fd-primary), nicht als
- * Hintergrund hinter dunklem Text.
+ * Fumadocs-Überschreibungen bewusst als :root/.dark und nicht im @theme-Block:
+ * fumadocs-ui/style.css deklariert --color-fd-* selbst, ungelayert. Nur eine
+ * ebenfalls ungelayerte Regel, die später in dieser Datei steht, gewinnt.
  */
 :root {
-  --fd-nav-height: 3.5rem;
-  --color-fd-primary: var(--color-ggs-link);
-  --color-fd-primary-foreground: #ffffff;
+  --ggs-gold-soft: #fff5bf;
+  --ggs-heading: #333333;
+  --ggs-text: #4d4d4d;
+  --ggs-hero-bg: #fdd700;
+  --ggs-hero-fg: #333333;
+  --ggs-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
+
+  --color-fd-background: #ffffff;
+  --color-fd-foreground: #333333;
+  --color-fd-muted: #f4f4f4;
+  --color-fd-muted-foreground: #626262;
+  --color-fd-card: #ffffff;
+  --color-fd-card-foreground: #333333;
+  --color-fd-popover: #ffffff;
+  --color-fd-popover-foreground: #333333;
+  --color-fd-border: #e6e6e6;
+  --color-fd-primary: #333333;
+  --color-fd-primary-foreground: #fdd700;
+  --color-fd-secondary: #f4f4f4;
+  --color-fd-secondary-foreground: #333333;
+  --color-fd-accent: #fff5bf;
+  --color-fd-accent-foreground: #333333;
+  --color-fd-ring: #fdd700;
 }
 
-/*
- * Eigene .dark-Regel aus demselben Grund wie :root oben: fumadocs-ui/style.css
- * bringt für den Dunkelmodus eine eigene, ebenfalls ungelayerte .dark-Regel
- * mit (--color-fd-primary: hsl(0, 0%, 98%)). Beide Selektoren haben dieselbe
- * Spezifität; unsere Regel steht später in dieser Datei und gewinnt deshalb.
- * --color-ggs-link selbst bleibt unverändert (3,70:1 auf #121212, siehe
- * lib/contrast.test.ts) — deshalb --color-ggs-link-dark statt Wiederverwendung.
- * Vordergrund #171717 statt Weiß: Weiß auf --color-ggs-link-dark erreicht nur
- * 3,79:1, #171717 (Fumadocs' eigener Hellmodus-Primärton) erreicht 4,73:1.
- */
 .dark {
-  --color-fd-primary: var(--color-ggs-link-dark);
-  --color-fd-primary-foreground: #171717;
+  --ggs-gold-soft: #3a3208;
+  --ggs-heading: #f3f1ea;
+  --ggs-text: #c9ccd3;
+  --ggs-hero-bg: #1a1e26;
+  --ggs-hero-fg: #f3f1ea;
+  --ggs-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.6);
+
+  --color-fd-background: #12151b;
+  --color-fd-foreground: #f3f1ea;
+  --color-fd-muted: #1a1e26;
+  --color-fd-muted-foreground: #a3a9b4;
+  --color-fd-card: #171b22;
+  --color-fd-card-foreground: #f3f1ea;
+  --color-fd-popover: #171b22;
+  --color-fd-popover-foreground: #f3f1ea;
+  --color-fd-border: #2a2f39;
+  --color-fd-primary: #fdd700;
+  --color-fd-primary-foreground: #12151b;
+  --color-fd-secondary: #1a1e26;
+  --color-fd-secondary-foreground: #f3f1ea;
+  --color-fd-accent: #3a3208;
+  --color-fd-accent-foreground: #f3f1ea;
+  --color-fd-ring: #fdd700;
 }
 
 body {
   font-family: var(--font-ggs-sans), system-ui, sans-serif;
-  color: var(--color-ggs-text);
 }
 
-h1, h2, h3, h4 {
-  color: var(--color-ggs-secondary);
+code,
+kbd,
+pre {
+  font-family: var(--font-ggs-mono), ui-monospace, monospace;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-ggs-display), var(--font-ggs-sans), sans-serif;
+  color: var(--ggs-heading);
+}
+
+.prose {
+  --tw-prose-body: var(--ggs-text);
+}
+
+/* Links: dunkle Schrift mit gelbem Strich, bei Hover gelb hinterlegt */
+.prose a:not([data-card]) {
+  color: var(--ggs-heading);
+  font-weight: 500;
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-ggs-gold);
+  text-decoration-thickness: 0.18em;
+  text-underline-offset: 0.2em;
+  transition: background-color 120ms ease;
+}
+
+.prose a:not([data-card]):hover {
+  background-color: var(--ggs-gold-soft);
 }
 
 /* Gelbe Zierlinie unter Abschnittsüberschriften, wie auf der Schulhomepage */
-.prose h2::after {
+.prose h2 {
+  padding-bottom: 0.4rem;
+  background-image: linear-gradient(var(--color-ggs-gold), var(--color-ggs-gold));
+  background-size: 3rem 3px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+}
+
+/* Aktiver Sidebar-Eintrag: gelbe Kante und Hinterlegung */
+:is(#nd-sidebar, #nd-sidebar-mobile) a[data-active='true'] {
+  background-color: var(--ggs-gold-soft);
+  color: var(--ggs-heading);
+  box-shadow: inset 3px 0 0 var(--color-ggs-gold);
+  font-weight: 600;
+}
+
+/* ---- Wortmarke ---- */
+
+.ggs-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ggs-heading);
+}
+
+.ggs-logo-mark {
+  display: inline-grid;
+  place-items: center;
+  height: 2rem;
+  padding-inline: 0.45rem;
+  border-radius: 0.35rem;
+  background: var(--color-ggs-gold);
+  color: #333333;
+  font-family: var(--font-ggs-display), sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+.ggs-logo-text {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-ggs-display), sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.1;
+}
+
+.ggs-logo-sub {
+  font-family: var(--font-ggs-sans), sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+/* ---- Portal ---- */
+
+.ggs-portal {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-bottom: 4rem;
+}
+
+.ggs-hero {
+  padding: 4rem 1rem 3.5rem;
+  background: var(--ggs-hero-bg);
+  color: var(--ggs-hero-fg);
+}
+
+.dark .ggs-hero {
+  border-bottom: 4px solid var(--color-ggs-gold);
+}
+
+.ggs-hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 44rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.ggs-eyebrow,
+.ggs-section-title {
+  font-family: var(--font-ggs-display), sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ggs-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+}
+
+.ggs-hero-title {
+  margin: 0 0 2rem;
+  color: inherit;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.ggs-hero-search {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--color-fd-card);
+  color: var(--color-fd-muted-foreground);
+  box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.25);
+  font-size: 1.05rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+}
+
+.ggs-hero-search:hover,
+.ggs-hero-search:focus-visible {
+  border-color: #333333;
+  outline: none;
+}
+
+.dark .ggs-hero-search {
+  border-color: var(--color-fd-border);
+}
+
+.dark .ggs-hero-search:hover,
+.dark .ggs-hero-search:focus-visible {
+  border-color: var(--color-ggs-gold);
+}
+
+.ggs-hero-search svg {
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  color: var(--ggs-heading);
+}
+
+.ggs-hero-search-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ggs-hero-kbd {
+  display: none;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .ggs-hero-kbd {
+    display: inline-flex;
+  }
+}
+
+.ggs-quick {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.ggs-quick-label {
+  font-weight: 500;
+}
+
+.ggs-chip {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.7);
+  color: #333333;
+  font-weight: 500;
+  transition: background-color 120ms ease;
+}
+
+.ggs-chip:hover,
+.ggs-chip:focus-visible {
+  background: #ffffff;
+}
+
+.dark .ggs-chip {
+  background: var(--color-fd-muted);
+  color: var(--ggs-heading);
+  border: 1px solid var(--color-fd-border);
+}
+
+.ggs-section,
+.ggs-contact {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.ggs-section-title {
+  margin: 0 0 2rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.ggs-section-title::after {
   content: '';
   display: block;
   width: 3rem;
   height: 3px;
-  margin-top: 0.5rem;
-  background: var(--color-ggs-primary);
+  margin: 0.75rem auto 0;
+  background: var(--color-ggs-gold);
+}
+
+.ggs-topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 22rem));
+  justify-content: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ggs-topic {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 0.9rem;
+  background: var(--color-fd-card);
+  box-shadow: var(--ggs-shadow);
+}
+
+.ggs-topic-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ggs-topic-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.6rem;
+  background: var(--color-ggs-gold);
+  color: #333333;
+}
+
+.ggs-topic-icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.ggs-topic-name {
+  font-family: var(--font-ggs-display), sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ggs-heading);
+}
+
+.ggs-topic-head:hover .ggs-topic-name,
+.ggs-topic-head:focus-visible .ggs-topic-name {
+  text-decoration: underline;
+  text-decoration-color: var(--color-ggs-gold);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.25em;
+}
+
+.ggs-topic-pages {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-fd-border);
+}
+
+.ggs-topic-pages a {
+  display: block;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--color-fd-border);
+  color: var(--ggs-text);
+  font-size: 0.95rem;
+}
+
+.ggs-topic-pages a:hover,
+.ggs-topic-pages a:focus-visible {
+  color: var(--ggs-heading);
+  box-shadow: inset 3px 0 0 var(--color-ggs-gold);
+  padding-left: 0.6rem;
+  outline: none;
+}
+
+.ggs-topic-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ggs-heading);
+}
+
+.ggs-topic-more svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.ggs-empty,
+.ggs-contact p {
+  max-width: 40rem;
+  margin: 0 auto;
+  color: var(--ggs-text);
+  line-height: 1.6;
+  text-align: center;
+}
+
+.ggs-empty a,
+.ggs-contact a {
+  color: var(--ggs-heading);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--color-ggs-gold);
+  text-decoration-thickness: 0.18em;
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Runbook-Kasten ---- */
+
+.ggs-runbook {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--color-fd-border);
+  border-left: 4px solid var(--color-ggs-gold);
+  border-radius: 0.6rem;
+  background: var(--color-fd-card);
+  font-size: 0.925rem;
+  color: var(--ggs-text);
+}
+
+.ggs-runbook ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+
+.ggs-runbook li {
+  margin-block: 0.15rem;
+}
+
+.ggs-runbook-label {
+  margin: 0 0 0.35rem !important;
+  font-family: var(--font-ggs-display), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-fd-muted-foreground);
+}
+
+.ggs-runbook-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.ggs-runbook code {
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.ggs-runbook-id {
+  margin: 0 !important;
+  font-size: 0.8rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ggs-hero-search,
+  .ggs-chip,
+  .prose a {
+    transition: none;
+  }
 }
