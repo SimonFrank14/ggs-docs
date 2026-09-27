@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
-import defaultMdxComponents from 'fumadocs-ui/mdx';
+import { mdxComponents } from '@/components/mdx';
 import { Portal } from '@/components/portal';
 import { RunbookBox } from '@/components/runbook-box';
 import { canAccess } from '@/lib/access';
@@ -63,7 +63,7 @@ export default async function Page({ params }: Props) {
         <DocsDescription>{page.data.description}</DocsDescription>
         <DocsBody>
           {page.data.runbook ? <RunbookBox runbook={page.data.runbook} /> : null}
-          <MDX components={defaultMdxComponents} />
+          <MDX components={mdxComponents} />
         </DocsBody>
       </DocsPage>
     </DocsLayout>
