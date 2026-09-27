@@ -1,0 +1,43 @@
+{
+  "commit": "fe1bb121518f1a387df214daaa33da9630f1e539",
+  "generated": "2026-09-27T21:36:38.466Z",
+  "metadata": [
+    {
+      "__outstatic": {
+        "commit": "fe1bb121518f1a387df214daaa33da9630f1e539",
+        "hash": "938929511",
+        "path": "content/docs/schulalltag/vertretungsplan-app.md"
+      },
+      "author": {
+        "name": "Simon Frank",
+        "picture": "https://avatars.githubusercontent.com/u/71044587?v=4"
+      },
+      "collection": "schulalltag",
+      "description": "Den Vertretungsplan des Goethe-Gymnasiums in der Vertretungsplan-App abrufen",
+      "featured": true,
+      "order": 10,
+      "publishedAt": "2026-09-27T00:00:00.000Z",
+      "roles": [
+        {
+          "label": "Schülerinnen und Schüler",
+          "value": "schueler"
+        },
+        {
+          "label": "Eltern",
+          "value": "eltern"
+        },
+        {
+          "label": "Lehrkräfte",
+          "value": "lehrer"
+        },
+        {
+          "label": "Verwaltung",
+          "value": "verwaltung"
+        }
+      ],
+      "slug": "vertretungsplan-app",
+      "status": "draft",
+      "title": "Vertretungsplan-App einrichten"
+    }
+  ]
+}
