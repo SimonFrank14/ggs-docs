@@ -6,6 +6,8 @@ import { isDocRole, normalizeRoles, type DocRole } from './roles';
  */
 export interface Viewer {
   roles: readonly DocRole[];
+  /** Vorname für die Kopfzeile; spielt für die Rechte keine Rolle. */
+  name?: string;
 }
 
 export interface PageAccessMeta {

@@ -1,13 +1,16 @@
 import type { Viewer } from './access';
+import { auth } from './auth';
+import { mapWpRoles } from './roles';
 
 /**
- * Wer die aktuelle Anfrage stellt.
+ * Wer die aktuelle Anfrage stellt. `null` heißt anonym.
  *
- * Bis Auth.js gegen den WordPress-OIDC-Provider steht (Doku-Spec Phase 2),
- * ist jeder Besucher anonym und sieht nur `public`-Seiten. Admin-Inhalte wie
- * Runbooks liegen damit bereits im Inhaltsbaum, sind aber unsichtbar. Mit dem
- * Login ändert sich nur diese Funktion, nicht `canAccess` oder die Aufrufer.
+ * Liest nur das Sitzungs-Cookie, fragt WordPress also nicht bei jeder Anfrage.
+ * Ist WordPress nicht erreichbar, laufen öffentliche Seiten und bestehende
+ * Sitzungen weiter (Doku-Spec §7); nur die Neuanmeldung schlägt fehl.
  */
 export async function getViewer(): Promise<Viewer | null> {
-  return null;
+  const session = await auth();
+  if (!session?.user) return null;
+  return { roles: mapWpRoles(session.user.wpRoles ?? []), name: session.user.name || undefined };
 }
