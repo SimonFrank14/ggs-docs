@@ -7,8 +7,17 @@ publishedAt: 2026-09-27T00:00:00.000Z
 order: 10
 featured: true
 roles:
-  - label: Öffentlich
-    value: public
+  - label: Schülerinnen und Schüler
+    value: schueler
+  - label: Eltern
+    value: eltern
+  - label: Lehrkräfte
+    value: lehrer
+  - label: Verwaltung
+    value: verwaltung
+author:
+  name: Simon Frank
+  picture: https://avatars.githubusercontent.com/u/71044587?v=4
 ---
 
 Mit der Vertretungsplan-App siehst du den Vertretungsplan auf deinem Handy oder Tablet und kannst dich über Änderungen benachrichtigen lassen.
@@ -17,8 +26,8 @@ Mit der Vertretungsplan-App siehst du den Vertretungsplan auf deinem Handy oder 
 
 Die **Zugangsdaten der Schule** für die App. Im Schuljahr **2026/27** lauten sie:
 
-| | |
-|---|---|
+|  |  |
+| --- | --- |
 | **Benutzername** | `GGS` |
 | **Passwort** | `eGJw!DxDUo@1` |
 
