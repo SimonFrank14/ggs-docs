@@ -16,17 +16,21 @@ export function isDocRole(value: unknown): value is DocRole {
 /**
  * Abbildung WordPress-Rolle → Doku-Rollen.
  *
- * Die Slugs entsprechen der erwarteten Rollenbenennung im WordPress des GGS.
- * Sie werden gegen die Live-Benutzerverwaltung bestätigt, sobald Admin-Zugang
- * vorliegt (siehe Task 14, Step 1). Eine Abweichung ist eine Änderung an genau
- * dieser Tabelle plus der zugehörigen Testfälle.
+ * Die Slugs sind die echten Rollen der Schulhomepage, dieselben wie in
+ * ggs-stundenplan (`src/types/user.ts`). Die Mitgliedschaften sind Pläne des
+ * Plugins „Paid Member Subscriptions" (`pms_subscription_plan_<ID>`).
+ *
+ * Im Zweifel bekommt eine Rolle weniger: Unbekannte Rollen zählen nicht, und
+ * `admin` gibt es nur für WordPress-Administratoren.
  */
 const WP_ROLE_MAP: Readonly<Record<string, readonly DocRole[]>> = {
   administrator: ['admin'],
-  ggs_verwaltung: ['verwaltung'],
-  ggs_lehrer: ['lehrer'],
-  ggs_schueler: ['schueler'],
-  ggs_eltern: ['eltern'],
+  pms_subscription_plan_1456: ['lehrer'], // Lehrkräfte
+  pms_subscription_plan_1472: ['lehrer'], // „Global Admin" im Stundenplan, zählt dort als Kollegium
+  pms_subscription_plan_1455: ['schueler'], // Schülerinnen und Schüler
+  pms_subscription_plan_3799: ['schueler'], // Oberstufe
+  pms_subscription_plan_11698: ['eltern'], // Eltern
+  // Verwaltung: noch keine eigene WordPress-Rolle bekannt
 };
 
 export function mapWpRoles(wpRoles: readonly string[]): DocRole[] {

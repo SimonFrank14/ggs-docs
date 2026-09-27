@@ -29,8 +29,21 @@ describe('mapWpRoles', () => {
   });
 
   it('bildet mehrere WP-Rollen zusammen ab, ohne Duplikate', () => {
-    const result = mapWpRoles(['ggs_lehrer', 'ggs_eltern', 'ggs_lehrer']);
+    const result = mapWpRoles([
+      'pms_subscription_plan_1456',
+      'pms_subscription_plan_11698',
+      'pms_subscription_plan_1456',
+    ]);
     expect([...result].sort()).toEqual(['eltern', 'lehrer']);
+  });
+
+  it('bildet Schüler und Oberstufe beide auf schueler ab', () => {
+    expect(mapWpRoles(['pms_subscription_plan_1455'])).toEqual(['schueler']);
+    expect(mapWpRoles(['pms_subscription_plan_3799'])).toEqual(['schueler']);
+  });
+
+  it('gibt Stundenplanern keine Doku-Rolle', () => {
+    expect(mapWpRoles(['stundenplaner'])).toEqual([]);
   });
 
   it('ignoriert unbekannte WP-Rollen, statt sie durchzureichen', () => {

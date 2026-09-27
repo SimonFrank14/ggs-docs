@@ -922,3 +922,51 @@ h4 {
 .ggs-ki-limit--no li svg {
   color: var(--color-fd-muted-foreground);
 }
+
+/* Anmelden und „Kein Zugriff" */
+.ggs-auth {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 1rem;
+}
+
+.ggs-auth-card {
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 1rem;
+  background: var(--color-fd-card);
+}
+
+.ggs-auth-card h1 {
+  font-family: var(--font-ggs-display), system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.ggs-auth-card p {
+  color: var(--color-fd-muted-foreground);
+  margin-bottom: 1.25rem;
+}
+
+.ggs-auth-error {
+  color: var(--color-fd-foreground) !important;
+  border-left: 3px solid var(--color-fd-primary);
+  padding-left: 0.75rem;
+}
+
+.ggs-auth-button {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  background: var(--color-fd-primary);
+  color: var(--color-fd-primary-foreground);
+  cursor: pointer;
+}
+
+.ggs-auth-button:hover {
+  filter: brightness(0.95);
+}

@@ -14,6 +14,12 @@ services:
       - OST_CONTENT_PATH=${OST_CONTENT_PATH:-content/docs}
       - OST_REPO_MEDIA_PATH=${OST_REPO_MEDIA_PATH:-public/images/}
       - OST_PUBLIC_MEDIA_PATH=${OST_PUBLIC_MEDIA_PATH:-/images/}
+      # Anmeldung im Portal, Werte siehe .env.example
+      - AUTH_SECRET=${AUTH_SECRET}
+      - WORDPRESS_OAUTH_CLIENT_ID=${WORDPRESS_OAUTH_CLIENT_ID}
+      - WORDPRESS_OAUTH_CLIENT_SECRET=${WORDPRESS_OAUTH_CLIENT_SECRET}
+      - WORDPRESS_OAUTH_BASE_URL=${WORDPRESS_OAUTH_BASE_URL:-https://goethe-gymnasium-stolberg.de}
+      - WORDPRESS_APP_SECRET=${WORDPRESS_APP_SECRET}
     networks:
       - proxy-network
     labels:

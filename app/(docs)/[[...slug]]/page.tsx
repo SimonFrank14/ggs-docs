@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
@@ -7,7 +7,7 @@ import { mdxComponents } from '@/components/mdx';
 import { Portal } from '@/components/portal';
 import { RunbookBox } from '@/components/runbook-box';
 import { canAccess } from '@/lib/access';
-import { baseOptions } from '@/lib/layout';
+import { layoutOptions } from '@/lib/layout';
 import { visiblePages, visibleTree, docsSource } from '@/lib/source';
 import { getViewer } from '@/lib/viewer';
 
@@ -16,17 +16,19 @@ interface Props {
 }
 
 /**
- * Seite laden und gegen `canAccess` prüfen. Nicht zugängliche Seiten liefern
- * vorerst 404. Mit dem Login (Doku-Spec §3.5) werden daraus Weiterleitung zum
- * Login (anonym) bzw. 403 (falsche Rolle) — bis dahin gibt es keinen Login,
- * auf den eine Weiterleitung zeigen könnte.
+ * Seite laden und gegen `canAccess` prüfen (Doku-Spec §3.5):
+ * - gibt es die Seite nicht: 404
+ * - anonym und geschützt: `login`, die Seite leitet zur Anmeldung weiter
+ * - angemeldet, aber falsche Rolle: `forbidden`, die Seite erklärt das
  */
 async function loadPage(slug: string[] | undefined) {
   const page = docsSource.getPage(slug);
-  if (!page) return null;
+  if (!page) return { status: 'missing' as const };
   const viewer = await getViewer();
-  if (!canAccess(page.data, viewer)) return null;
-  return { page, viewer };
+  if (!canAccess(page.data, viewer)) {
+    return { status: viewer ? ('forbidden' as const) : ('login' as const), viewer };
+  }
+  return { status: 'ok' as const, page, viewer };
 }
 
 /*
@@ -37,10 +39,33 @@ async function loadPage(slug: string[] | undefined) {
 export default async function Page({ params }: Props) {
   const { slug } = await params;
   const loaded = await loadPage(slug);
-  if (!loaded) notFound();
+  if (loaded.status === 'missing') notFound();
+  if (loaded.status === 'login') {
+    redirect(`/anmelden?ziel=${encodeURIComponent(`/${(slug ?? []).join('/')}`)}`);
+  }
 
-  const { page, viewer } = loaded;
+  const { viewer } = loaded;
   const tree = visibleTree(viewer);
+
+  if (loaded.status === 'forbidden') {
+    return (
+      <HomeLayout {...layoutOptions(viewer)}>
+        <main className="ggs-auth">
+          <div className="ggs-auth-card">
+            <h1>Kein Zugriff</h1>
+            <p>
+              Diese Anleitung ist für eine andere Gruppe freigegeben als deine. Wenn du sie
+              brauchst, melde dich beim IT-Support.
+            </p>
+          </div>
+        </main>
+      </HomeLayout>
+    );
+  }
+
+  // TypeScript verengt nicht über redirect(); zur Laufzeit ist hier immer 'ok'
+  if (loaded.status !== 'ok') notFound();
+  const { page } = loaded;
 
   if (!slug || slug.length === 0) {
     const featured = visiblePages(viewer)
@@ -48,7 +73,7 @@ export default async function Page({ params }: Props) {
       .map((p) => ({ title: p.data.title, url: p.url }));
 
     return (
-      <HomeLayout {...baseOptions}>
+      <HomeLayout {...layoutOptions(viewer)}>
         <Portal tree={tree} featured={featured} />
       </HomeLayout>
     );
@@ -57,7 +82,7 @@ export default async function Page({ params }: Props) {
   const MDX = page.data.body;
 
   return (
-    <DocsLayout tree={tree} {...baseOptions}>
+    <DocsLayout tree={tree} {...layoutOptions(viewer)}>
       <DocsPage toc={page.data.toc} full={page.data.full}>
         <DocsTitle>{page.data.title}</DocsTitle>
         <DocsDescription>{page.data.description}</DocsDescription>
@@ -73,7 +98,7 @@ export default async function Page({ params }: Props) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const loaded = await loadPage(slug);
-  if (!loaded) return {};
+  if (loaded.status !== 'ok') return {};
 
   const { page } = loaded;
   return {
