@@ -9,7 +9,7 @@ import { mdxComponents } from '@/components/mdx';
 import { Portal } from '@/components/portal';
 import { RunbookBox } from '@/components/runbook-box';
 import { canAccess } from '@/lib/access';
-import { AccountSidebar } from '@/components/account';
+import { AccountButton } from '@/components/account';
 import { baseOptions, homeOptions } from '@/lib/layout';
 import { visiblePages, visibleTree, docsSource } from '@/lib/source';
 import { getViewer } from '@/lib/viewer';
@@ -54,17 +54,23 @@ export default async function Page({ params }: Props) {
     return (
       <HomeLayout {...homeOptions(viewer)}>
         <main className="ggs-auth">
-          <div className="ggs-auth-card">
-            <div className="ggs-auth-band">
-              <Lock aria-hidden="true" />
+          <div className="ggs-idcard">
+            <div className="ggs-idcard-strip">
+              <span className="ggs-idcard-mark" aria-hidden="true">
+                GGS
+              </span>
+              <span className="ggs-idcard-school">Goethe-Gymnasium Stolberg</span>
             </div>
-            <div className="ggs-auth-body">
-              <h1>Kein Zugriff</h1>
+            <div className="ggs-idcard-body">
+              <span className="ggs-idcard-photo ggs-idcard-photo--lock" aria-hidden="true">
+                <Lock />
+              </span>
+              <h2>Kein Zugriff</h2>
               <p>
                 Diese Anleitung ist für eine andere Gruppe freigegeben als deine. Wenn du sie
                 brauchst, melde dich beim IT-Support.
               </p>
-              <Link href="/" className="ggs-auth-secondary">
+              <Link href="/" className="ggs-idcard-secondary">
                 Zur Startseite
               </Link>
             </div>
@@ -96,7 +102,7 @@ export default async function Page({ params }: Props) {
     <DocsLayout
       tree={tree}
       {...baseOptions}
-      sidebar={{ footer: <AccountSidebar viewer={viewer} /> }}
+      sidebar={{ footer: <AccountButton viewer={viewer} variant="row" /> }}
     >
       <DocsPage toc={page.data.toc} full={page.data.full}>
         <DocsTitle>{page.data.title}</DocsTitle>

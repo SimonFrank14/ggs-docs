@@ -923,72 +923,62 @@ h4 {
   color: var(--color-fd-muted-foreground);
 }
 
-/* Konto in der Kopfzeile und in der Seitenleiste */
-.ggs-account-login {
+/*
+ * Konto-Knopf. Ruhige Pille mit feinem Rand; der gelbe Kreis trägt Symbol
+ * bzw. Initiale und ist das einzige Farbsignal. Beim Überfahren füllt sich
+ * die Pille in Tinte.
+ */
+.ggs-account {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.55rem;
+  color: var(--color-fd-foreground);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.ggs-account:focus-visible,
+.ggs-account-close:focus-visible,
+.ggs-idcard-primary:focus-visible,
+.ggs-idcard-secondary:focus-visible {
+  outline: 2px solid var(--color-fd-ring, var(--color-ggs-ink));
+  outline-offset: 2px;
+}
+
+.ggs-account--pill {
   height: 2.25rem;
-  padding: 0 0.95rem;
-  border-radius: 999px;
-  background: var(--color-ggs-gold);
-  color: var(--color-ggs-ink);
-  font-size: 0.875rem;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: filter 0.15s;
-}
-
-.ggs-account-login:hover {
-  filter: brightness(0.94);
-}
-
-.ggs-account-login svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-.ggs-account-login--block {
-  width: 100%;
-  justify-content: center;
-}
-
-.ggs-account-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  height: 2.25rem;
-  padding: 0 0.85rem 0 0.25rem;
+  padding: 0 0.95rem 0 0.25rem;
   border: 1px solid var(--color-fd-border);
   border-radius: 999px;
   font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-fd-foreground);
+  font-weight: 600;
   white-space: nowrap;
-  transition: background 0.15s;
 }
 
-.ggs-account-chip:hover,
-.ggs-account-row:hover {
+.ggs-account--pill:hover {
+  background: var(--color-ggs-ink);
+  border-color: var(--color-ggs-ink);
+  color: #ffffff;
+}
+
+.ggs-account--icon {
+  padding: 0.25rem;
+  border-radius: 999px;
+}
+
+.ggs-account--row {
+  width: 100%;
+  padding: 0.45rem 0.5rem;
+  border-radius: 0.7rem;
+  text-align: start;
+}
+
+.ggs-account--row:hover,
+.ggs-account--icon:hover {
   background: var(--color-fd-accent);
 }
 
-.ggs-account-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 999px;
-  color: var(--color-fd-foreground);
-}
-
-.ggs-account-icon svg {
-  width: 1.3rem;
-  height: 1.3rem;
-}
-
-.ggs-account-avatar {
+.ggs-account-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -998,190 +988,253 @@ h4 {
   border-radius: 999px;
   background: var(--color-ggs-gold);
   color: var(--color-ggs-ink);
+}
+
+.ggs-account-badge svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.ggs-account-badge--initial {
   font-family: var(--font-ggs-display), system-ui, sans-serif;
   font-size: 0.8rem;
   font-weight: 700;
 }
 
-.ggs-account-avatar--large {
-  width: 4rem;
-  height: 4rem;
-  font-size: 1.6rem;
-  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.6);
-}
-
-.ggs-account-row {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.4rem 0.5rem;
-  border-radius: 0.6rem;
-  transition: background 0.15s;
-}
-
-.ggs-account-row-text {
+.ggs-account-text {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
 }
 
-.ggs-account-row-name {
+.ggs-account--row .ggs-account-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-fd-foreground);
 }
 
-.ggs-account-row-hint {
+.ggs-account-hint {
   font-size: 0.75rem;
   color: var(--color-fd-muted-foreground);
 }
 
-/* Anmelden, Konto und „Kein Zugriff" */
+/* Konto-Popup */
+.ggs-account-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(24rem, calc(100vw - 2rem));
+  padding: 0;
+  border: none;
+  border-radius: 1.1rem;
+  background: transparent;
+  overflow: visible;
+}
+
+.ggs-account-dialog::backdrop {
+  background: rgb(20 20 20 / 0.45);
+  backdrop-filter: blur(3px);
+}
+
+.ggs-account-dialog[open] {
+  animation: ggs-dialog-in 0.18s ease-out;
+}
+
+@keyframes ggs-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ggs-account-dialog[open] {
+    animation: none;
+  }
+}
+
+.ggs-account-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 1;
+  display: inline-flex;
+  padding: 0.35rem;
+  border-radius: 999px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.ggs-account-close:hover {
+  background: rgb(255 255 255 / 0.12);
+}
+
+.ggs-account-close svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/*
+ * Karte im Stil eines Schulausweises: dunkler Streifen mit Schulmarke oben,
+ * darunter ruhig und linksbündig der Inhalt.
+ */
 .ggs-auth {
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: flex-start;
   padding: 3.5rem 1rem 4rem;
-  background:
-    radial-gradient(60rem 22rem at 50% -6rem, var(--ggs-gold-soft), transparent 70%),
-    var(--color-fd-background);
 }
 
-.ggs-auth-card {
+.ggs-idcard {
   width: 100%;
-  max-width: 26rem;
+  max-width: 24rem;
   overflow: hidden;
   border: 1px solid var(--color-fd-border);
-  border-radius: 1.25rem;
+  border-radius: 1.1rem;
   background: var(--color-fd-card);
+  color: var(--color-fd-card-foreground);
   box-shadow: var(--ggs-shadow);
+  text-align: start;
 }
 
-.ggs-auth-band {
+.ggs-idcard-strip {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 7rem;
+  gap: 0.7rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--color-ggs-ink);
+  color: #ffffff;
+}
+
+.ggs-idcard-mark {
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.35rem;
   background: var(--color-ggs-gold);
   color: var(--color-ggs-ink);
+  font-family: var(--font-ggs-display), system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
 }
 
-.ggs-auth-band > svg {
-  width: 2.5rem;
-  height: 2.5rem;
+.ggs-idcard-school {
+  font-family: var(--font-ggs-display), system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
-.ggs-logo-mark--large {
-  height: auto;
-  font-size: 1.6rem;
-  padding: 0.55rem 0.9rem;
-  border-radius: 0.8rem;
-  background: var(--color-ggs-ink);
-  color: var(--color-ggs-gold);
-}
-
-.ggs-auth-body {
+.ggs-idcard-body {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1.75rem 1.75rem 2rem;
+  gap: 0.9rem;
+  padding: 1.5rem 1.25rem 1.4rem;
 }
 
-.ggs-auth-eyebrow {
+.ggs-idcard-body h2 {
   font-family: var(--font-ggs-display), system-ui, sans-serif;
-  font-size: 0.72rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-fd-muted-foreground);
-  margin-bottom: -0.6rem;
-}
-
-.ggs-auth-body h1 {
-  font-family: var(--font-ggs-display), system-ui, sans-serif;
-  font-size: 1.6rem;
-  font-weight: 800;
+  line-height: 1.25;
   color: var(--ggs-heading);
 }
 
-.ggs-auth-body p {
+.ggs-idcard-body > p {
   color: var(--ggs-text);
   line-height: 1.6;
 }
 
-.ggs-auth-roles {
+.ggs-idcard-person {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.9rem;
 }
 
-.ggs-auth-roles li {
-  padding: 0.2rem 0.7rem;
+.ggs-idcard-photo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.8rem;
+  background: var(--color-ggs-gold);
+  color: var(--color-ggs-ink);
+  font-family: var(--font-ggs-display), system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.ggs-idcard-photo--lock svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ggs-idcard-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+
+.ggs-idcard-roles li {
+  padding: 0.1rem 0.6rem;
   border-radius: 999px;
   background: var(--ggs-gold-soft);
   color: var(--ggs-heading);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
 }
 
-.ggs-auth-error {
+.ggs-idcard-note {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-fd-muted-foreground);
+}
+
+.ggs-idcard-error {
   padding: 0.6rem 0.8rem;
-  border-radius: 0.6rem;
-  background: var(--ggs-gold-soft);
-  color: var(--ggs-heading) !important;
+  border-left: 3px solid var(--color-ggs-gold);
+  border-radius: 0.4rem;
+  background: var(--color-fd-muted);
+  color: var(--ggs-heading);
   font-size: 0.9rem;
 }
 
-.ggs-auth-hint {
-  font-size: 0.8rem;
-  text-align: center;
-  color: var(--color-fd-muted-foreground) !important;
-}
-
-.ggs-auth-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.ggs-auth-button,
-.ggs-auth-secondary {
+.ggs-idcard-primary,
+.ggs-idcard-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   width: 100%;
-  min-height: 2.9rem;
-  padding: 0 1.1rem;
-  border-radius: 0.75rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: 0.7rem;
   font-weight: 600;
   cursor: pointer;
-  transition: filter 0.15s, background 0.15s;
+  transition: background 0.15s, filter 0.15s;
 }
 
-.ggs-auth-button {
-  background: var(--color-ggs-ink);
-  color: var(--color-ggs-gold);
+.ggs-idcard-primary {
+  background: var(--color-ggs-gold);
+  color: var(--color-ggs-ink);
 }
 
-.ggs-auth-button:hover {
-  filter: brightness(1.25);
+.ggs-idcard-primary:hover {
+  filter: brightness(0.94);
 }
 
-.ggs-auth-secondary {
+.ggs-idcard-secondary {
   border: 1px solid var(--color-fd-border);
   color: var(--color-fd-foreground);
 }
 
-.ggs-auth-secondary:hover {
+.ggs-idcard-secondary:hover {
   background: var(--color-fd-accent);
 }
 
-.ggs-auth-button svg,
-.ggs-auth-secondary svg {
-  width: 1.1rem;
-  height: 1.1rem;
+.ggs-idcard-secondary svg {
+  width: 1.05rem;
+  height: 1.05rem;
 }
 
 /* Konto-Symbol auf dem Handy direkt neben Suche und Menü, ohne Lücke */

@@ -30,7 +30,7 @@ export function homeOptions(viewer: Viewer | null): BaseLayoutProps {
       ...baseOptions.nav,
       children: (
         <div className="ggs-nav-account ms-auto lg:hidden">
-          <AccountButton viewer={viewer} compact />
+          <AccountButton viewer={viewer} variant="icon" />
         </div>
       ),
     },

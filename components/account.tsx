@@ -1,70 +1,79 @@
-import Link from 'next/link';
-import { LogIn } from 'lucide-react';
-import type { Viewer } from '@/lib/access';
+'use client';
 
-function initialOf(viewer: Viewer): string {
-  return (viewer.name?.trim()[0] ?? '?').toUpperCase();
-}
+import { usePathname } from 'next/navigation';
+import { useId, useRef } from 'react';
+import { UserRound, X } from 'lucide-react';
+import type { Viewer } from '@/lib/access';
+import { AccountPanel, initialOf } from './account-panel';
+
+type Variant = 'pill' | 'icon' | 'row';
 
 /**
- * Anmelde-Knopf bzw. Konto-Chip in der Kopfzeile. Beides führt nach
- * `/anmelden`; dort wird angemeldet oder das Konto gezeigt.
- * `compact` ist die Variante fürs Handy: nur Symbol bzw. Initiale.
+ * Konto-Knopf: anonym „Anmelden", angemeldet Initiale und Vorname. Ein Klick
+ * öffnet das Konto-Popup über der aktuellen Seite; nach der Anmeldung geht es
+ * auf genau diese Seite zurück.
  */
 export function AccountButton({
   viewer,
-  compact = false,
+  variant = 'pill',
 }: {
   viewer: Viewer | null;
-  compact?: boolean;
+  variant?: Variant;
 }): React.JSX.Element {
-  if (!viewer) {
-    return (
-      <Link
-        href="/anmelden"
-        className={compact ? 'ggs-account-icon' : 'ggs-account-login'}
-        aria-label="Anmelden"
-      >
-        <LogIn aria-hidden="true" />
-        {compact ? null : <span>Anmelden</span>}
-      </Link>
-    );
-  }
+  const dialog = useRef<HTMLDialogElement>(null);
+  const headingId = useId();
+  const pathname = usePathname();
+  const label = viewer ? viewer.name || 'Konto' : 'Anmelden';
 
-  return (
-    <Link
-      href="/anmelden"
-      className={compact ? 'ggs-account-icon ggs-account-icon--user' : 'ggs-account-chip'}
-      aria-label={`Konto${viewer.name ? ` von ${viewer.name}` : ''}`}
-    >
-      <span className="ggs-account-avatar" aria-hidden="true">
-        {initialOf(viewer)}
-      </span>
-      {compact ? null : <span>{viewer.name || 'Konto'}</span>}
-    </Link>
+  const badge = viewer ? (
+    <span className="ggs-account-badge ggs-account-badge--initial" aria-hidden="true">
+      {initialOf(viewer)}
+    </span>
+  ) : (
+    <span className="ggs-account-badge" aria-hidden="true">
+      <UserRound />
+    </span>
   );
-}
-
-/** Konto-Zeile unten in der Seitenleiste der Doku-Seiten. */
-export function AccountSidebar({ viewer }: { viewer: Viewer | null }): React.JSX.Element {
-  if (!viewer) {
-    return (
-      <Link href="/anmelden" className="ggs-account-login ggs-account-login--block">
-        <LogIn aria-hidden="true" />
-        <span>Anmelden</span>
-      </Link>
-    );
-  }
 
   return (
-    <Link href="/anmelden" className="ggs-account-row">
-      <span className="ggs-account-avatar" aria-hidden="true">
-        {initialOf(viewer)}
-      </span>
-      <span className="ggs-account-row-text">
-        <span className="ggs-account-row-name">{viewer.name || 'Angemeldet'}</span>
-        <span className="ggs-account-row-hint">Konto &amp; Abmelden</span>
-      </span>
-    </Link>
+    <>
+      <button
+        type="button"
+        className={`ggs-account ggs-account--${variant}`}
+        aria-haspopup="dialog"
+        aria-label={variant === 'icon' ? label : undefined}
+        onClick={() => dialog.current?.showModal()}
+      >
+        {badge}
+        {variant === 'icon' ? null : (
+          <span className="ggs-account-text">
+            <span className="ggs-account-label">{label}</span>
+            {variant === 'row' ? (
+              <span className="ggs-account-hint">{viewer ? 'Konto & Abmelden' : 'Mit dem Homepage-Konto'}</span>
+            ) : null}
+          </span>
+        )}
+      </button>
+
+      <dialog
+        ref={dialog}
+        className="ggs-account-dialog"
+        aria-labelledby={headingId}
+        // Klick auf den abgedunkelten Hintergrund schließt das Popup
+        onClick={(event) => {
+          if (event.target === event.currentTarget) event.currentTarget.close();
+        }}
+      >
+        <button
+          type="button"
+          className="ggs-account-close"
+          aria-label="Schließen"
+          onClick={() => dialog.current?.close()}
+        >
+          <X aria-hidden="true" />
+        </button>
+        <AccountPanel viewer={viewer} ziel={pathname || '/'} headingId={headingId} />
+      </dialog>
+    </>
   );
 }
