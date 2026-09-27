@@ -1,11 +1,11 @@
 {
-  "commit": "",
-  "generated": "2026-09-27T21:33:31.125Z",
+  "commit": "fe1bb121518f1a387df214daaa33da9630f1e539",
+  "generated": "2026-09-27T21:36:38.466Z",
   "metadata": [
     {
       "__outstatic": {
-        "commit": "",
-        "hash": "1807344490",
+        "commit": "fe1bb121518f1a387df214daaa33da9630f1e539",
+        "hash": "938929511",
         "path": "content/docs/schulalltag/vertretungsplan-app.md"
       },
       "author": {
@@ -36,7 +36,7 @@
         }
       ],
       "slug": "vertretungsplan-app",
-      "status": "published",
+      "status": "draft",
       "title": "Vertretungsplan-App einrichten"
     }
   ]

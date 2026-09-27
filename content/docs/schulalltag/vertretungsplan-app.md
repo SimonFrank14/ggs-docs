@@ -1,7 +1,7 @@
 ---
 title: Vertretungsplan-App einrichten
 description: Den Vertretungsplan des Goethe-Gymnasiums in der Vertretungsplan-App abrufen
-status: published
+status: draft
 slug: vertretungsplan-app
 publishedAt: 2026-09-27T00:00:00.000Z
 order: 10
