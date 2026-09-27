@@ -3,6 +3,7 @@ import { icons } from 'lucide-react';
 import { createElement } from 'react';
 import { docs } from '@/.source';
 import { canAccess, filterTree, type Viewer } from './access';
+import { sortTreeByOrder } from './tree-order';
 
 // fumadocs-mdx 11.10.1 widerspricht sich zwischen Laufzeit und Typdeklaration:
 // - Laufzeit (node_modules/fumadocs-mdx/dist/chunk-UOOPSLFY.js:45-51,
@@ -37,6 +38,11 @@ export function visiblePages(viewer: Viewer | null): DocsPage[] {
 
 /** Der Navigationsbaum, gefiltert auf die Seiten, die `viewer` sehen darf. */
 export function visibleTree(viewer: Viewer | null) {
-  const urls = new Set(visiblePages(viewer).map((page) => page.url));
-  return filterTree(docsSource.pageTree, (url) => urls.has(url));
+  const pages = visiblePages(viewer);
+  const urls = new Set(pages.map((page) => page.url));
+  const order = new Map(pages.map((page) => [page.url, page.data.order]));
+  return sortTreeByOrder(
+    filterTree(docsSource.pageTree, (url) => urls.has(url)),
+    (url) => order.get(url),
+  );
 }
