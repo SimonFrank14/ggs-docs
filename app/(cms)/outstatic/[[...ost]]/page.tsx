@@ -1,4 +1,3 @@
-import 'outstatic/outstatic.css';
 import type { Metadata } from 'next';
 import { Outstatic } from 'outstatic';
 import { OstClient } from 'outstatic/client';
