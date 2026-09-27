@@ -4,7 +4,9 @@ FROM node:22-alpine AS base
 FROM base AS deps
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+# Ohne Skripte: Das postinstall (fumadocs-mdx) braucht die Inhalte, die erst im
+# Builder da sind. Nur die nativen Pakete bauen wir nach.
+RUN npm ci --ignore-scripts && npm rebuild esbuild sharp
 
 # Builder
 FROM base AS builder

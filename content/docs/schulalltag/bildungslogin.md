@@ -54,13 +54,11 @@ Das funktioniert für die **Cornelsen Lernen App**, die **Klett Lernen App** und
 
 > **Wichtig:** Öffne vorher jedes Buch des Verlags einmal im Browser im [Bildungslogin Medienregal](https://www.bildungslogin.de/app/#/sso/bilob?idp_hint=USR__OOC_NW_AixConcept). Sonst erscheint es nicht in der App.
 
-1. Lade die kostenlose App aus dem App Store, aus Google Play oder aus **Jamf Teacher** bzw. **Jamf Student**.
+1. Auf Schul-iPads sind die Apps schon installiert, dann fang direkt mit Schritt 2 an. Auf anderen Geräten lädst du die kostenlose App aus dem App Store oder aus Google Play.
 2. Öffne die App und geh durch die Anmeldemasken. Wähle zum Schluss **Anmelden mit Bildungslogin**.
 3. Wähle in der Liste **AixConcept**.
 4. Melde dich mit deinem Schulkonto an.
 5. Deine Bücher aus dem Bildungslogin erscheinen. Wähle aus, welche du für die Offline-Nutzung auf dem Gerät speichern willst.
-
-> **Hinweis:** Auf den iPads der Klasse 7 installiert die Schule die Apps automatisch.
 
 ## Klappt nicht?
 
