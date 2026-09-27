@@ -923,50 +923,268 @@ h4 {
   color: var(--color-fd-muted-foreground);
 }
 
-/* Anmelden und „Kein Zugriff" */
+/* Konto in der Kopfzeile und in der Seitenleiste */
+.ggs-account-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 2.25rem;
+  padding: 0 0.95rem;
+  border-radius: 999px;
+  background: var(--color-ggs-gold);
+  color: var(--color-ggs-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: filter 0.15s;
+}
+
+.ggs-account-login:hover {
+  filter: brightness(0.94);
+}
+
+.ggs-account-login svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.ggs-account-login--block {
+  width: 100%;
+  justify-content: center;
+}
+
+.ggs-account-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.25rem;
+  padding: 0 0.85rem 0 0.25rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-fd-foreground);
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.ggs-account-chip:hover,
+.ggs-account-row:hover {
+  background: var(--color-fd-accent);
+}
+
+.ggs-account-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  color: var(--color-fd-foreground);
+}
+
+.ggs-account-icon svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.ggs-account-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  background: var(--color-ggs-gold);
+  color: var(--color-ggs-ink);
+  font-family: var(--font-ggs-display), system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.ggs-account-avatar--large {
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.6rem;
+  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.6);
+}
+
+.ggs-account-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.6rem;
+  transition: background 0.15s;
+}
+
+.ggs-account-row-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.ggs-account-row-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-fd-foreground);
+}
+
+.ggs-account-row-hint {
+  font-size: 0.75rem;
+  color: var(--color-fd-muted-foreground);
+}
+
+/* Anmelden, Konto und „Kein Zugriff" */
 .ggs-auth {
   display: flex;
+  flex: 1;
   justify-content: center;
-  padding: 4rem 1rem;
+  align-items: flex-start;
+  padding: 3.5rem 1rem 4rem;
+  background:
+    radial-gradient(60rem 22rem at 50% -6rem, var(--ggs-gold-soft), transparent 70%),
+    var(--color-fd-background);
 }
 
 .ggs-auth-card {
   width: 100%;
-  max-width: 28rem;
-  padding: 2rem;
+  max-width: 26rem;
+  overflow: hidden;
   border: 1px solid var(--color-fd-border);
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   background: var(--color-fd-card);
+  box-shadow: var(--ggs-shadow);
 }
 
-.ggs-auth-card h1 {
+.ggs-auth-band {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7rem;
+  background: var(--color-ggs-gold);
+  color: var(--color-ggs-ink);
+}
+
+.ggs-auth-band > svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.ggs-logo-mark--large {
+  height: auto;
+  font-size: 1.6rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 0.8rem;
+  background: var(--color-ggs-ink);
+  color: var(--color-ggs-gold);
+}
+
+.ggs-auth-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.75rem 1.75rem 2rem;
+}
+
+.ggs-auth-eyebrow {
   font-family: var(--font-ggs-display), system-ui, sans-serif;
-  font-size: 1.5rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-fd-muted-foreground);
+  margin-bottom: -0.6rem;
 }
 
-.ggs-auth-card p {
-  color: var(--color-fd-muted-foreground);
-  margin-bottom: 1.25rem;
+.ggs-auth-body h1 {
+  font-family: var(--font-ggs-display), system-ui, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--ggs-heading);
+}
+
+.ggs-auth-body p {
+  color: var(--ggs-text);
+  line-height: 1.6;
+}
+
+.ggs-auth-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ggs-auth-roles li {
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: var(--ggs-gold-soft);
+  color: var(--ggs-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .ggs-auth-error {
-  color: var(--color-fd-foreground) !important;
-  border-left: 3px solid var(--color-fd-primary);
-  padding-left: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  background: var(--ggs-gold-soft);
+  color: var(--ggs-heading) !important;
+  font-size: 0.9rem;
+}
+
+.ggs-auth-hint {
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--color-fd-muted-foreground) !important;
+}
+
+.ggs-auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ggs-auth-button,
+.ggs-auth-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0 1.1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s, background 0.15s;
 }
 
 .ggs-auth-button {
-  width: 100%;
-  padding: 0.7rem 1rem;
-  border-radius: 0.6rem;
-  font-weight: 600;
-  background: var(--color-fd-primary);
-  color: var(--color-fd-primary-foreground);
-  cursor: pointer;
+  background: var(--color-ggs-ink);
+  color: var(--color-ggs-gold);
 }
 
 .ggs-auth-button:hover {
-  filter: brightness(0.95);
+  filter: brightness(1.25);
+}
+
+.ggs-auth-secondary {
+  border: 1px solid var(--color-fd-border);
+  color: var(--color-fd-foreground);
+}
+
+.ggs-auth-secondary:hover {
+  background: var(--color-fd-accent);
+}
+
+.ggs-auth-button svg,
+.ggs-auth-secondary svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* Konto-Symbol auf dem Handy direkt neben Suche und Menü, ohne Lücke */
+.ggs-nav-account ~ ul {
+  margin-inline-start: 0.25rem !important;
 }

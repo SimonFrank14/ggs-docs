@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
+import { Lock } from 'lucide-react';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
@@ -7,7 +9,8 @@ import { mdxComponents } from '@/components/mdx';
 import { Portal } from '@/components/portal';
 import { RunbookBox } from '@/components/runbook-box';
 import { canAccess } from '@/lib/access';
-import { layoutOptions } from '@/lib/layout';
+import { AccountSidebar } from '@/components/account';
+import { baseOptions, homeOptions } from '@/lib/layout';
 import { visiblePages, visibleTree, docsSource } from '@/lib/source';
 import { getViewer } from '@/lib/viewer';
 
@@ -49,14 +52,22 @@ export default async function Page({ params }: Props) {
 
   if (loaded.status === 'forbidden') {
     return (
-      <HomeLayout {...layoutOptions(viewer)}>
+      <HomeLayout {...homeOptions(viewer)}>
         <main className="ggs-auth">
           <div className="ggs-auth-card">
-            <h1>Kein Zugriff</h1>
-            <p>
-              Diese Anleitung ist für eine andere Gruppe freigegeben als deine. Wenn du sie
-              brauchst, melde dich beim IT-Support.
-            </p>
+            <div className="ggs-auth-band">
+              <Lock aria-hidden="true" />
+            </div>
+            <div className="ggs-auth-body">
+              <h1>Kein Zugriff</h1>
+              <p>
+                Diese Anleitung ist für eine andere Gruppe freigegeben als deine. Wenn du sie
+                brauchst, melde dich beim IT-Support.
+              </p>
+              <Link href="/" className="ggs-auth-secondary">
+                Zur Startseite
+              </Link>
+            </div>
           </div>
         </main>
       </HomeLayout>
@@ -73,7 +84,7 @@ export default async function Page({ params }: Props) {
       .map((p) => ({ title: p.data.title, url: p.url }));
 
     return (
-      <HomeLayout {...layoutOptions(viewer)}>
+      <HomeLayout {...homeOptions(viewer)}>
         <Portal tree={tree} featured={featured} />
       </HomeLayout>
     );
@@ -82,7 +93,11 @@ export default async function Page({ params }: Props) {
   const MDX = page.data.body;
 
   return (
-    <DocsLayout tree={tree} {...layoutOptions(viewer)}>
+    <DocsLayout
+      tree={tree}
+      {...baseOptions}
+      sidebar={{ footer: <AccountSidebar viewer={viewer} /> }}
+    >
       <DocsPage toc={page.data.toc} full={page.data.full}>
         <DocsTitle>{page.data.title}</DocsTitle>
         <DocsDescription>{page.data.description}</DocsDescription>
