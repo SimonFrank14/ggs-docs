@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
@@ -10,12 +10,13 @@ import { findDuplicateRunbookIds } from './runbook';
  */
 
 const CONTENT_DIR = join(__dirname, '..', 'content', 'docs');
+const PUBLIC_DIR = join(__dirname, '..', 'public');
 
 function listMdx(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = join(dir, entry.name);
     if (entry.isDirectory()) return listMdx(full);
-    return entry.name.endsWith('.mdx') ? [full] : [];
+    return /\.mdx?$/.test(entry.name) ? [full] : [];
   });
 }
 
@@ -42,5 +43,21 @@ describe('Inhaltsbaum', () => {
   it('klassifiziert jede Seite ausdrücklich über roles', () => {
     const unclassified = pages.filter((p) => !p.roles || p.roles.length === 0).map((p) => p.path);
     expect(unclassified).toEqual([]);
+  });
+
+  it('verlinkt nur auf existierende Seiten und Dateien', () => {
+    const broken: string[] = [];
+    for (const file of listMdx(CONTENT_DIR)) {
+      const text = readFileSync(file, 'utf8');
+      for (const [, target] of text.matchAll(/\]\((\/[^)\s#?]*)/g)) {
+        if (!target || target === '/') continue;
+        const inPublic = existsSync(join(PUBLIC_DIR, target));
+        const page = ['.md', '.mdx', '/index.md', '/index.mdx'].some((ext) =>
+          existsSync(join(CONTENT_DIR, target + ext)),
+        );
+        if (!inPublic && !page) broken.push(`${relative(CONTENT_DIR, file)} → ${target}`);
+      }
+    }
+    expect(broken).toEqual([]);
   });
 });

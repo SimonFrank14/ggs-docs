@@ -111,6 +111,15 @@ h4 {
   background-color: var(--ggs-gold-soft);
 }
 
+/* Screenshots: Hochformat nicht bildschirmfüllend, alles mit Rahmen */
+.prose img {
+  width: auto;
+  max-width: 100%;
+  max-height: 34rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 0.6rem;
+}
+
 /* Gelbe Zierlinie unter Abschnittsüberschriften, wie auf der Schulhomepage */
 .prose h2 {
   padding-bottom: 0.4rem;

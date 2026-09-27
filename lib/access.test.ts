@@ -9,7 +9,7 @@ const admin: Viewer = { roles: ['admin'] };
 const ohneRollen: Viewer = { roles: [] };
 
 describe('canAccess', () => {
-  const cases: Array<[string, { roles?: string[] | null }, Viewer | null, boolean]> = [
+  const cases: Array<[string, { roles?: unknown[] | null; status?: string }, Viewer | null, boolean]> = [
     ['public für Anonyme', { roles: ['public'] }, anonym, true],
     ['public für Angemeldete', { roles: ['public'] }, lehrer, true],
     ['lehrer-Seite für Lehrer', { roles: ['lehrer'] }, lehrer, true],
@@ -30,6 +30,12 @@ describe('canAccess', () => {
     ['unbekannte neben gültiger Rolle', { roles: ['hausmeister', 'public'] }, anonym, true],
     ['Angemeldet ohne Rollen = anonym', { roles: ['lehrer'] }, ohneRollen, false],
     ['Angemeldet ohne Rollen sieht public', { roles: ['public'] }, ohneRollen, true],
+    ['Outstatic-Format public', { roles: [{ label: 'Öffentlich', value: 'public' }] }, anonym, true],
+    ['Outstatic-Format lehrer für Eltern', { roles: [{ label: 'Lehrer', value: 'lehrer' }] }, eltern, false],
+    ['Outstatic-Format lehrer für Lehrer', { roles: [{ label: 'Lehrer', value: 'lehrer' }] }, lehrer, true],
+    ['Entwurf ist nicht öffentlich', { roles: ['public'], status: 'draft' }, anonym, false],
+    ['Entwurf sieht auch admin nicht', { roles: ['public'], status: 'draft' }, admin, false],
+    ['Veröffentlicht wie ohne Status', { roles: ['public'], status: 'published' }, anonym, true],
   ];
 
   it.each(cases)('%s', (_name, page, viewer, expected) => {

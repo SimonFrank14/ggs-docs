@@ -1,0 +1,26 @@
+[
+  {
+    "title": "iPads",
+    "slug": "ipads",
+    "path": "content/docs/ipads",
+    "parent": null
+  },
+  {
+    "title": "WLAN & Drucken",
+    "slug": "wlan-drucken",
+    "path": "content/docs/wlan-drucken",
+    "parent": null
+  },
+  {
+    "title": "Konto & Anmeldung",
+    "slug": "konto",
+    "path": "content/docs/konto",
+    "parent": null
+  },
+  {
+    "title": "Schulalltag",
+    "slug": "schulalltag",
+    "path": "content/docs/schulalltag",
+    "parent": null
+  }
+]
