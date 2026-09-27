@@ -120,6 +120,18 @@ h4 {
   border-radius: 0.6rem;
 }
 
+/* Auf dem Handy dürfen Screenshots fast die ganze Bildschirmhöhe nutzen */
+@media (max-width: 640px) {
+  .prose img {
+    max-height: 80svh;
+  }
+}
+
+/* Vergrößerbare Bilder zeigen das beim Überfahren */
+.prose [data-rmiz-content] img {
+  cursor: zoom-in;
+}
+
 /* Gelbe Zierlinie unter Abschnittsüberschriften, wie auf der Schulhomepage */
 .prose h2 {
   padding-bottom: 0.4rem;
