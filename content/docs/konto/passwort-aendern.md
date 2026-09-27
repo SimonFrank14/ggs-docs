@@ -37,5 +37,5 @@ Du kannst das Passwort deines Schulkontos selbst ändern, online oder an einem P
 ## Klappt nicht?
 
 - **Passwort vergessen?** Wende dich an den IT-Support oder das Sekretariat. Du bekommst ein Einmal-Passwort. Nach der Anmeldung damit musst du dein Passwort sofort ändern.
-- **WLAN verbindet sich nach der Änderung nicht mehr?** Siehe [Mit dem Schul-WLAN verbinden](/infrastruktur/schul-wlan).
+- **WLAN verbindet sich nach der Änderung nicht mehr?** Siehe [Mit dem Schul-WLAN verbinden](/wlan-drucken/schul-wlan).
 - **Immer noch nicht?** Schreib dem IT-Support im Teams-Chat **IT-Support** oder an [support@goethe-gymnasium-stolberg.de](mailto:support@goethe-gymnasium-stolberg.de). Sag dazu, welches Gerät du nutzt.

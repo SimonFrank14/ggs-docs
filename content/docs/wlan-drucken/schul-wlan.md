@@ -11,7 +11,9 @@ roles:
     value: public
 ---
 
-Das Schul-WLAN heißt **GGS-WLAN**. Du meldest dich einmal mit deinem Schulkonto an, danach verbindet sich dein Gerät automatisch.
+Das Schul-WLAN für Schülerinnen, Schüler und Lehrkräfte heißt **GGS-WLAN**. Du meldest dich einmal mit deinem Schulkonto an, danach verbindet sich dein Gerät automatisch.
+
+> **Hinweis:** Gäste nutzen das Netz **GGS-Extern**. Diese Anleitung gilt nur für GGS-WLAN.
 
 ## Das brauchst du
 

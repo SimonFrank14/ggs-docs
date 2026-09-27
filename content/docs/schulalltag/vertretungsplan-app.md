@@ -15,7 +15,14 @@ Mit der Vertretungsplan-App siehst du den Vertretungsplan auf deinem Handy oder 
 
 ## Das brauchst du
 
-Die **Zugangsdaten der Schule** für die App (Benutzername und Passwort). Sie ändern sich jedes Schuljahr und stehen bewusst nicht öffentlich im Netz. Wenn du sie nicht hast, frag den IT-Support.
+Die **Zugangsdaten der Schule** für die App. Im Schuljahr **2026/27** lauten sie:
+
+| | |
+|---|---|
+| **Benutzername** | `GGS` |
+| **Passwort** | `eGJw!DxDUo@1` |
+
+Die Zugangsdaten ändern sich zu jedem Schuljahr, damit nur aktuelle Schulangehörige den Plan sehen. Schau kurz vor Schulbeginn hier nach den neuen Daten.
 
 ## Einrichten
 
@@ -24,13 +31,13 @@ Die **Zugangsdaten der Schule** für die App (Benutzername und Passwort). Sie ä
 3. Wähle die Schule aus: **Deutschland** → **Nordrhein-Westfalen** → **Stolberg (Rhld.)** → **Goethe-Gymnasium** → **Schülervertretungsplan**.
 4. Wähle, ob du den Plan für **eine Klasse** oder für die **ganze Schule** sehen willst. Mehrere Klassen filtern geht nur mit der Premium-Version.
 5. Lege fest, ob du **Push-Benachrichtigungen** über Änderungen bekommen möchtest.
-6. Gib den Benutzernamen und das Passwort der Schule ein.
+6. Gib den Benutzernamen und das Passwort von oben ein.
 7. Setze den Haken, damit deine Zugangsdaten auf den Servern der vertretungsplan.app gespeichert werden. Nur so kann die App den Plan abrufen und dich benachrichtigen.
 
 Fertig — jetzt siehst du deinen Vertretungsplan.
 
 ## Klappt nicht?
 
-- **Anmeldung schlägt fehl?** Prüfe, ob du die Zugangsdaten für das aktuelle Schuljahr eingegeben hast. Sie ändern sich jedes Jahr.
+- **Anmeldung schlägt fehl?** Prüfe, ob du die Zugangsdaten von oben eingegeben hast, genau mit Groß- und Kleinschreibung. Zu Schuljahresbeginn musst du sie in der App neu eingeben.
 - **Keine Benachrichtigungen?** Prüfe, ob der Haken zum Speichern der Zugangsdaten gesetzt ist.
 - **Immer noch nicht?** Schreib dem IT-Support im Teams-Chat **IT-Support** oder an [support@goethe-gymnasium-stolberg.de](mailto:support@goethe-gymnasium-stolberg.de). Sag dazu, welches Gerät du nutzt.

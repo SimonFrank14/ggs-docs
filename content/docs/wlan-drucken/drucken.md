@@ -15,7 +15,7 @@ Du kannst die Drucker der Schule mit allen Geräten nutzen, auch mit Windows und
 
 ## Das brauchst du
 
-- Eine Verbindung mit dem **GGS-WLAN**. So verbindest du dich: [Mit dem Schul-WLAN verbinden](/infrastruktur/schul-wlan)
+- Eine Verbindung mit dem **GGS-WLAN**. So verbindest du dich: [Mit dem Schul-WLAN verbinden](/wlan-drucken/schul-wlan)
 
 ## Drucker einrichten
 

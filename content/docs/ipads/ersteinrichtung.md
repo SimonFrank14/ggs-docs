@@ -29,7 +29,7 @@ Beim ersten Start führt dich das iPad durch mehrere Bildschirme. Du meldest dic
 
    ![Bildschirm Schnellstart mit der markierten Option Ohne anderes Gerät konfigurieren](/images/anleitungen/ersteinrichtung/ohne-anderes-geraet-konfigurieren.webp)
 
-6. Wähle ein WLAN mit Internetzugang, gib gegebenenfalls das Passwort ein und tippe auf **Weiter**. In der Schule nimmst du das Schul-WLAN, siehe [Mit dem Schul-WLAN verbinden](/infrastruktur/schul-wlan).
+6. Wähle ein WLAN mit Internetzugang, gib gegebenenfalls das Passwort ein und tippe auf **Weiter**. In der Schule nimmst du das Schul-WLAN, siehe [Mit dem Schul-WLAN verbinden](/wlan-drucken/schul-wlan).
 7. Wähle bei **Apps & Daten übertragen** die Option **Nichts übertragen**.
 
    ![Bildschirm Apps & Daten übertragen mit der markierten Option Nichts übertragen](/images/anleitungen/ersteinrichtung/apps-und-daten-nichts-uebertragen.webp)
@@ -41,7 +41,8 @@ Beim ersten Start führt dich das iPad durch mehrere Bildschirme. Du meldest dic
 9. Melde dich mit deinem Microsoft-Schulkonto an. Das iPad lädt jetzt die Konfiguration der Schule herunter.
 10. Richte **Touch ID** ein (empfohlen) oder wähle eine der anderen Optionen.
 11. Erstelle einen **Code** und tippe auf **Weiter**.
-12. Melde dich mit dem **Apple Account der Schule** an: Gib deine Schul-E-Mail-Adresse ein und danach dein Passwort (wie bei Teams). Bestätige, falls nötig, die Geschäftsbedingungen.
+12. Melde dich mit einem **Apple Account** an. Du kannst den **Apple Account der Schule** nehmen oder deinen **privaten**. Der Account der Schule ist freiwillig, siehe [Welcher Apple Account?](#welcher-apple-account) unten.
+    Für den Account der Schule gibst du deine Schul-E-Mail-Adresse ein und danach dein Passwort (wie bei Teams). Bestätige, falls nötig, die Geschäftsbedingungen.
 
     ![Bildschirm Apple-ID für Goethe Gymnasium](/images/anleitungen/ersteinrichtung/apple-account-der-schule.webp)
 
@@ -52,7 +53,15 @@ Fertig — der Home-Bildschirm erscheint. Im Hintergrund lädt das iPad einige A
 
 > **Wichtig:** Wähle einen Code, der nicht leicht zu erraten ist, also nicht `123456` oder `111111`. Noch sicherer wird er mit Groß- und Kleinbuchstaben und Sonderzeichen.
 
-> **Hinweis:** Statt des Apple Accounts der Schule kannst du auch einen privaten Apple Account verwenden. Einen privaten Apple Account brauchst du, wenn du selbst Apps installieren möchtest.
+
+## Welcher Apple Account?
+
+Beides ist erlaubt. Such dir aus, was besser zu dir passt:
+
+| | Apple Account der Schule | Privater Apple Account |
+|---|---|---|
+| **Vorteile** | Keine privaten Daten auf dem Schul-iPad. Du brauchst keinen eigenen Account. | Du kannst selbst Apps aus dem App Store installieren und deine gekauften Apps nutzen. |
+| **Nachteile** | Du kannst keine Apps selbst installieren. Apps kommen nur über die Schule. | Deine privaten Daten (z. B. iCloud, Käufe) liegen auch auf dem Schul-iPad. |
 
 ## Schul-E-Mail einrichten
 

@@ -4,7 +4,7 @@ description: Beim Bildungslogin anmelden, Lizenzen aktivieren und Verlags-Apps v
 status: published
 slug: bildungslogin
 publishedAt: 2026-09-27T00:00:00.000Z
-order: 30
+order: 20
 roles:
   - label: Öffentlich
     value: public
@@ -25,7 +25,7 @@ Im Bildungslogin findest du deine digitalen Schulbücher von verschiedenen Verla
 
 ## Lizenzen aktivieren
 
-Zu Beginn des Schuljahres bekommst du für deine Schulbücher persönliche Lizenzschlüssel. Jeder Schlüssel gilt nur einmal und nur für dich.
+Digitale Schulbücher gibt es für die **Klassen 7 bis EF**. Zu Beginn des Schuljahres bekommst du für deine Schulbücher persönliche Lizenzschlüssel. Jeder Schlüssel gilt nur einmal und nur für dich.
 
 > **Wichtig:** Halte deine Lizenzschlüssel geheim.
 
