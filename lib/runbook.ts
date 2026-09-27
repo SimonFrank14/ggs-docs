@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { DOC_ROLES } from './roles';
+import { DOC_ROLES, normalizeRoles } from './roles';
 
 /**
  * Frontmatter-Vertrag der Doku (Doku-Spec §3.3) samt Runbook-Block
@@ -22,8 +22,19 @@ export const runbookSchema = z.object({
 
 export type Runbook = z.infer<typeof runbookSchema>;
 
+/**
+ * Outstatic speichert Mehrfachauswahl-Felder („Tags") als `{ label, value }`,
+ * von Hand geschriebene Seiten als einfache Liste. Beides wird zu `['lehrer', …]`.
+ */
+const rolesField = z.preprocess(
+  (value) => (Array.isArray(value) ? normalizeRoles(value) : value),
+  z.array(z.enum(DOC_ROLES)),
+);
+
 export const docAccessFields = {
-  roles: z.array(z.enum(DOC_ROLES)).optional(),
+  roles: rolesField.optional(),
+  /** Von Outstatic gesetzt. Entwürfe sind für niemanden sichtbar, auch nicht für admin. */
+  status: z.enum(['draft', 'published']).optional(),
   order: z.number().optional(),
   /** Erscheint auf der Startseite unter „Häufig gesucht". */
   featured: z.boolean().optional(),

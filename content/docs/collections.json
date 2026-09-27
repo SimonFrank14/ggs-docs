@@ -1,0 +1,32 @@
+[
+  {
+    "title": "WLAN, Drucken & Beamer",
+    "slug": "infrastruktur",
+    "path": "content/docs/infrastruktur",
+    "parent": null
+  },
+  {
+    "title": "Konto & Anmeldung",
+    "slug": "konto",
+    "path": "content/docs/konto",
+    "parent": null
+  },
+  {
+    "title": "iPads",
+    "slug": "ipads",
+    "path": "content/docs/ipads",
+    "parent": null
+  },
+  {
+    "title": "Für Lehrkräfte",
+    "slug": "lehrkraefte",
+    "path": "content/docs/lehrkraefte",
+    "parent": null
+  },
+  {
+    "title": "Schulalltag",
+    "slug": "schulalltag",
+    "path": "content/docs/schulalltag",
+    "parent": null
+  }
+]

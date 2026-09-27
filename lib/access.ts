@@ -1,5 +1,5 @@
 import type * as PageTree from 'fumadocs-core/page-tree';
-import { isDocRole, type DocRole } from './roles';
+import { isDocRole, normalizeRoles, type DocRole } from './roles';
 
 /**
  * Wer eine Seite ansieht. `null` heißt anonym und hat genau die Rolle `public`.
@@ -9,7 +9,10 @@ export interface Viewer {
 }
 
 export interface PageAccessMeta {
-  roles?: readonly string[] | null;
+  /** Strings oder Outstatic-Objekte `{ label, value }`, siehe `normalizeRoles`. */
+  roles?: readonly unknown[] | null;
+  /** Von Outstatic gesetzt; `draft` ist für niemanden sichtbar. */
+  status?: string | null;
 }
 
 /**
@@ -19,9 +22,13 @@ export interface PageAccessMeta {
  * - Unbekannte Rollenwerte zählen nicht; bleibt keine gültige übrig, gilt wieder nur `admin`.
  * - `public` heißt für alle sichtbar, auch für Angemeldete.
  * - `admin` sieht alles. Darüber hinaus additiv ohne Hierarchie.
+ * - Entwürfe aus Outstatic (`status: draft`) sieht niemand, auch nicht `admin`:
+ *   Der Editor ist die Vorschau, die Doku zeigt nur Veröffentlichtes.
  */
 export function canAccess(page: PageAccessMeta, viewer: Viewer | null): boolean {
-  const declared = (page.roles ?? []).filter(isDocRole);
+  if (page.status === 'draft') return false;
+
+  const declared = normalizeRoles(page.roles).filter(isDocRole);
   const required: readonly DocRole[] = declared.length > 0 ? declared : ['admin'];
 
   const held = new Set<DocRole>(['public', ...(viewer?.roles ?? [])]);

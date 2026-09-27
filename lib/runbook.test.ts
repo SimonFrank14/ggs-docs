@@ -19,6 +19,26 @@ describe('Frontmatter-Schema', () => {
     expect(schema.safeParse({}).success).toBe(true);
   });
 
+  it('akzeptiert Rollen im Outstatic-Format { label, value }', () => {
+    const result = schema.safeParse({
+      roles: [
+        { label: 'Lehrer', value: 'lehrer' },
+        { label: 'Eltern', value: 'eltern' },
+      ],
+    });
+    expect(result.success).toBe(true);
+    expect(result.data?.roles).toEqual(['lehrer', 'eltern']);
+  });
+
+  it('weist unbekannte Rollen auch im Outstatic-Format ab', () => {
+    expect(schema.safeParse({ roles: [{ label: 'X', value: 'hausmeister' }] }).success).toBe(false);
+  });
+
+  it('kennt den Outstatic-Status', () => {
+    expect(schema.safeParse({ roles: ['public'], status: 'draft' }).success).toBe(true);
+    expect(schema.safeParse({ roles: ['public'], status: 'archiviert' }).success).toBe(false);
+  });
+
   it('weist unbekannte Rollen ab', () => {
     expect(schema.safeParse({ roles: ['hausmeister'] }).success).toBe(false);
   });

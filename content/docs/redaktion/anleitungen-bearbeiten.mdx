@@ -1,0 +1,54 @@
+---
+title: Anleitungen bearbeiten
+description: Wie Anleitungen im Browser mit Outstatic geschrieben und veröffentlicht werden
+roles: [admin]
+order: 10
+---
+
+Anleitungen bearbeitest du im Browser unter **`/outstatic`**. Jede Änderung wird als Commit im Repo `SimonFrank14/ggs-docs` gespeichert; nach dem neuen Build ist sie in wenigen Minuten online.
+
+## Zugang
+
+- Anmeldung mit **GitHub**. Du brauchst Schreibrechte auf das Repo `ggs-docs`.
+- Achtung: Schreibrechte gelten für das ganze Repo, also auch für den Code. Deshalb ist der Kreis bewusst auf das IT-Team beschränkt (Doku-Spec, offener Punkt 5).
+
+## Was im Editor bearbeitet werden kann
+
+Der Editor zeigt die **Sammlungen** aus `content/docs/collections.json`. Jede Sammlung ist ein Themenordner, z. B. *WLAN, Drucken & Beamer* oder *Konto & Anmeldung*.
+
+Bewusst **nicht** im Editor:
+
+- **Runbooks** — ihr `runbook`-Block ist ein verschachteltes Objekt, das der Editor nicht abbilden kann. Runbooks werden im Git bearbeitet.
+- **Seiten mit Komponenten** (`.mdx`), z. B. *KI im IT-Support* — der Markdown-Editor würde die Komponenten beim Speichern zerstören.
+
+Ein Test (`lib/outstatic.test.ts`) bricht den Build ab, wenn eine Sammlung versehentlich eine `.mdx`-Datei enthält oder die Runbooks auftauchen.
+
+## Felder
+
+| Feld | Bedeutung |
+|---|---|
+| **Titel** | als Aufgabe formulieren: „Mit dem Schul-WLAN verbinden", nicht „WLAN" |
+| **Beschreibung** | ein Satz, erscheint unter dem Titel und in der Suche |
+| **Sichtbar für** | wer die Seite sehen darf. *Öffentlich* = alle. **Ohne Auswahl sieht die Seite nur das IT-Team.** |
+| **Reihenfolge** | Position in der Navigation: 10, 20, 30 … |
+| **Häufig gesucht** | erscheint auf der Startseite als Schnellzugriff |
+| **Status** | *Draft* ist nirgends sichtbar, auch nicht für das IT-Team. Erst *Published* geht online. |
+
+Den Titel eines Themenordners in der Navigation ändert man nicht im Editor, sondern in `meta.json` des Ordners.
+
+## Schreibregeln
+
+- Ein Einleitungssatz, dann **Das brauchst du**, dann nummerierte Schritte — eine Handlung pro Schritt, Bedienelemente **fett**.
+- Am Ende **Klappt nicht?** mit den häufigsten Problemen und dem Weg zum IT-Support.
+- *du* für alle, *Sie* in *Für Lehrkräfte*.
+- Keine Namen oder Mailadressen einzelner Personen — Kontakt ist immer der IT-Support.
+- Bilder nur, wenn sie beim Wiedererkennen des Bildschirms helfen. Screenshots keine fremden Personen- oder Schülerdaten zeigen lassen.
+- Hinweise als Zitat: `> **Hinweis:** …`
+
+Vorlage: [Mit dem Schul-WLAN verbinden](/infrastruktur/schul-wlan).
+
+## Neuer Themenordner
+
+1. Ordner unter `content/docs/` anlegen, darin `meta.json` mit Titel und Icon ([Lucide](https://lucide.dev/icons)-Name).
+2. Eintrag in `content/docs/collections.json` ergänzen.
+3. `schema.json` aus einem bestehenden Ordner kopieren und den Titel anpassen — sonst fehlen im Editor die Felder *Sichtbar für*, *Reihenfolge* und *Häufig gesucht*.

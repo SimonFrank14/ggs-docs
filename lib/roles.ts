@@ -36,3 +36,16 @@ export function mapWpRoles(wpRoles: readonly string[]): DocRole[] {
   }
   return [...mapped];
 }
+
+/**
+ * Rollen aus dem Frontmatter als einfache Liste. Outstatic speichert
+ * Mehrfachauswahl-Felder als `{ label, value }`, von Hand geschriebene Seiten
+ * als Strings. fumadocs reicht zur Laufzeit das rohe Frontmatter durch —
+ * deshalb muss jeder Leser der Rollen hierüber gehen, nicht nur das Schema.
+ */
+export function normalizeRoles(value: unknown): unknown[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) =>
+    item && typeof item === 'object' && 'value' in item ? (item as { value: unknown }).value : item,
+  );
+}

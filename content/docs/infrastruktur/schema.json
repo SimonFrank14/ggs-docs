@@ -1,0 +1,51 @@
+{
+  "title": "WLAN, Drucken & Beamer",
+  "type": "object",
+  "properties": {
+    "roles": {
+      "title": "Sichtbar für",
+      "fieldType": "Tags",
+      "dataType": "array",
+      "required": true,
+      "description": "Wer die Seite sehen darf. „Öffentlich\" = alle, auch ohne Anmeldung. Ohne Auswahl sieht sie nur das IT-Team.",
+      "values": [
+        {
+          "label": "Öffentlich",
+          "value": "public"
+        },
+        {
+          "label": "Eltern",
+          "value": "eltern"
+        },
+        {
+          "label": "Schülerinnen und Schüler",
+          "value": "schueler"
+        },
+        {
+          "label": "Lehrkräfte",
+          "value": "lehrer"
+        },
+        {
+          "label": "Verwaltung",
+          "value": "verwaltung"
+        },
+        {
+          "label": "Nur IT-Team",
+          "value": "admin"
+        }
+      ]
+    },
+    "order": {
+      "title": "Reihenfolge",
+      "fieldType": "Number",
+      "dataType": "number",
+      "description": "Position in der Navigation: 10, 20, 30 … (kleinere Zahl weiter oben)"
+    },
+    "featured": {
+      "title": "Häufig gesucht",
+      "fieldType": "Boolean",
+      "dataType": "boolean",
+      "description": "Auf der Startseite unter „Häufig gesucht\" zeigen"
+    }
+  }
+}

@@ -6,6 +6,12 @@ export const docs = defineDocs({
   docs: {
     schema: frontmatterSchema.extend(docAccessFields).superRefine(checkDocFrontmatter),
   },
+  // Nur meta.json ist Navigation. Outstatic legt im selben Baum schema.json
+  // (pro Sammlung) und metadata.json ab; ohne diese Einschränkung liest
+  // fumadocs jede JSON-Datei als Navigationsdatei.
+  meta: {
+    files: ['**/meta.json'],
+  },
 });
 
 export default defineConfig();
