@@ -1,0 +1,115 @@
+---
+title: KI im IT-Support
+description: Was der KI-Assistent im IT-Support tut, was er nicht tut, und wie deine Daten geschützt sind
+# Bis zum Start des Assistenten nur für das IT-Team sichtbar. Zum Start auf
+# [public] stellen — vorher die Punkte in „Vor dem Veröffentlichen" unten prüfen.
+roles: [admin]
+order: 10
+---
+
+{/*
+Vor dem Veröffentlichen prüfen (und diesen Kommentar dann löschen):
+- Startdatum eintragen (Callout oben)
+- Modellanbieter und Verarbeitungsort eintragen, sobald der AVV unterschrieben ist (Abschnitt „Wo läuft das?")
+- Link zur Datenschutzerklärung prüfen
+- Mit der Datenschutzbeauftragten abgestimmt?
+*/}
+
+<Callout title="Neu im IT-Support ab [Startdatum]">
+Das IT-Team bekommt Unterstützung von einem KI-Assistenten. **Für dich ändert sich nichts:** Du schreibst wie bisher, und dir antworten wie bisher Menschen aus dem IT-Team. Auf dieser Seite steht, was der Assistent im Hintergrund tut — und was nicht.
+</Callout>
+
+## In einem Satz
+
+Der Assistent liest dein Anliegen **ohne Namen und Nummern**, sucht in unseren Anleitungen die Lösung und schlägt sie dem IT-Team vor. **Ein Mensch entscheidet** und antwortet dir.
+
+<KiAblauf />
+
+## Was du davon hast
+
+- **Schnellere Hilfe.** Das IT-Team muss nicht erst suchen, welche Anleitung passt und welche Angaben fehlen — der Vorschlag liegt schon im Ticket.
+- **Gezielte Rückfragen.** Fehlt etwas Wichtiges, zum Beispiel die Gerätenummer deines iPads, fragen wir früher und genauer nach, statt dreimal hin und her zu schreiben.
+- **Gleich gute Antworten**, egal wer gerade Dienst hat, weil alle mit denselben Anleitungen arbeiten.
+- **Mehr Zeit für schwierige Fälle.** Routine wie „App fehlt" oder „iPad-Speicher voll" geht schneller, und das IT-Team hat mehr Luft für den Rest.
+
+## Was sich für dich ändert — und was nicht
+
+| | |
+|---|---|
+| Wie du uns erreichst | **unverändert:** Teams-Chat „IT-Support" oder [support@goethe-gymnasium-stolberg.de](mailto:support@goethe-gymnasium-stolberg.de) |
+| Wer dir antwortet | **unverändert:** ein Mensch aus dem IT-Team |
+| Wie schnell | oft schneller, versprechen können wir es nicht |
+| Rückfragen | manchmal früher und gezielter |
+| Passwort, Gerätecode per **Mail** | wir prüfen deine Identität auf einem zweiten Weg, z. B. per Rückruf oder in Teams — eine Mailadresse lässt sich fälschen |
+
+## Was der Assistent darf — und was nicht
+
+<KiGrenzen />
+
+## Wie deine Daten geschützt sind
+
+### Platzhalter statt Namen
+
+Bevor der Assistent dein Anliegen zu sehen bekommt, ersetzen wir Namen, Mailadressen, Telefonnummern und Gerätenummern durch **Platzhalter**. Der Assistent arbeitet nur mit diesen Platzhaltern. Die echten Angaben setzt ausschließlich unser eigenes System wieder ein, auf Servern der Schule — etwa um nachzusehen, ob dein iPad online ist, oder nachdem ein Mensch einen Schritt freigegeben hat. Der Assistent selbst bekommt sie dabei nicht zu sehen.
+
+<KiPlatzhalter />
+
+Was der Assistent **nie** bekommt:
+
+- **Anhänge und Bildschirmfotos.** Er erfährt nur, dass etwas angehängt ist.
+- **Passwörter und Codes.** Setzen wir ein Passwort zurück oder erzeugen einen Freischaltcode, sieht das Ergebnis nur der Mensch, der es freigegeben hat.
+- **Schülerakten, Noten oder Zeugnisse.**
+
+### Kein Schritt ohne Menschen
+
+Der Assistent kann nachsehen und vorschlagen. **Alles, was etwas verändert** — eine App installieren, ein Passwort zurücksetzen, ein Gerät sperren, dir eine Antwort schicken — braucht die Freigabe eines Menschen. So sieht das für das IT-Team aus:
+
+<KiFreigabe />
+
+Einige Dinge kann der Assistent überhaupt nicht, auch nicht mit Freigabe: Geräte löschen, Konten löschen, Rechte vergeben.
+
+### Wo läuft das?
+
+- Der Teil, der deine Angaben durch Platzhalter ersetzt und die Zuordnung speichert, läuft **auf Servern der Schule**.
+- Das Sprachmodell selbst betreibt ein Anbieter, mit dem die Schule einen **Vertrag zur Auftragsverarbeitung** nach der DSGVO geschlossen hat: [Anbieter, Verarbeitungsort]. Der Anbieter darf deine Anfragen **nicht zum Trainieren** seiner Modelle verwenden.
+- Jeder Schritt wird protokolliert: welcher Vorschlag, wer freigegeben hat, was passiert ist. Das Protokoll ist nach 30 Tagen nur noch mit Platzhaltern lesbar und wird nach 12 Monaten gelöscht.
+
+## Ist das ohne Risiko?
+
+Ehrlich: **Kein System ist ganz ohne Risiko.** Wir haben es aber so gebaut, dass Fehler klein bleiben:
+
+- **Platzhalter erkennen nicht alles.** Namen, die wir nicht kennen, Tippfehler oder Beschreibungen wie „der große Junge aus der 7b" können durchrutschen. Deshalb gilt: Platzhalter machen die Daten für den Anbieter **schwer zuzuordnen**, aber nicht anonym. Genau dafür gibt es den Vertrag zur Auftragsverarbeitung.
+- **Der Assistent kann sich irren.** Deshalb schlägt er nur vor. Entscheiden tut ein Mensch — so wie vorher auch.
+- **Er kann nichts Folgenreiches allein tun.** Die Grenzen oben stehen nicht in einer Anweisung an die KI, sondern in der Technik: Was keine Freigabe hat, wird nicht ausgeführt, egal was im Text steht.
+
+Du kannst selbst mithelfen:
+
+- **Schreib nur, was für das Problem nötig ist.** Gesundheitliche oder familiäre Details brauchen wir für ein iPad-Problem nicht.
+- **Schick nie ein Passwort** — nicht an uns, nicht an sonst jemanden. Wir fragen nie danach.
+- **Bildschirmfotos sind willkommen**, der Assistent sieht sie nicht.
+
+## Ich möchte das nicht
+
+Das ist in Ordnung. Schreib es uns einfach — im Teams-Chat oder per Mail, zum Beispiel: *„Bitte meine Anliegen ohne KI-Assistent bearbeiten."* Wir vermerken das, und deine Anliegen bearbeitet das IT-Team **ohne den Assistenten**. Einen Nachteil hast du dadurch nicht; es kann nur manchmal etwas länger dauern.
+
+Für bestimmte Bereiche ist der Assistent ohnehin abgeschaltet, zum Beispiel für Personalangelegenheiten der Verwaltung.
+
+## Häufige Fragen
+
+**Chatte ich mit einer KI?**
+Nein. Im Teams-Chat „IT-Support" und per Mail schreibst du mit dem IT-Team. Der Assistent arbeitet nur im Hintergrund.
+
+**Woran erkenne ich, ob der Assistent beteiligt war?**
+Im Text erkennst du es nicht, weil jede Antwort ein Mensch geprüft und abgeschickt hat. Ob der Assistent beteiligt war, steht im Ticket; auf Nachfrage sagen wir es dir.
+
+**Liest die KI meine Mails oder Teams-Chats?**
+Nein. Nur Nachrichten, die du an den IT-Support schickst — mit Platzhaltern. Um Zusammenhänge zu erkennen („das gleiche Problem wie letzte Woche"), kann er auch frühere Support-Anfragen von dir sehen, ebenfalls nur mit Platzhaltern.
+
+**Wird mit meinen Daten eine KI trainiert?**
+Nein. Das ist vertraglich ausgeschlossen.
+
+**Wer hat Zugriff auf die Zuordnung der Platzhalter?**
+Nur das System auf den Servern der Schule, verschlüsselt. Menschen im IT-Team sehen die echten Angaben ohnehin im Ticket — wie bisher.
+
+**Ich habe eine Frage zum Datenschutz.**
+Wende dich an die Datenschutzbeauftragte der Schule. Die Kontaktdaten stehen in der [Datenschutzerklärung](https://goethe-gymnasium-stolberg.de/datenschutz/).
