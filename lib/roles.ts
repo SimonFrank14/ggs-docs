@@ -53,3 +53,13 @@ export function normalizeRoles(value: unknown): unknown[] {
     item && typeof item === 'object' && 'value' in item ? (item as { value: unknown }).value : item,
   );
 }
+
+/** Anzeigenamen der Rollen, z. B. auf der Konto-Seite. */
+export const ROLE_LABELS: Readonly<Record<DocRole, string>> = {
+  public: 'Alle',
+  eltern: 'Eltern',
+  schueler: 'Schülerin / Schüler',
+  lehrer: 'Lehrkraft',
+  verwaltung: 'Verwaltung',
+  admin: 'IT-Team',
+};

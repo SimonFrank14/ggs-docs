@@ -16,6 +16,9 @@ services:
       - OST_PUBLIC_MEDIA_PATH=${OST_PUBLIC_MEDIA_PATH:-/images/}
       # Anmeldung im Portal, Werte siehe .env.example
       - AUTH_SECRET=${AUTH_SECRET}
+      # Öffentliche Adresse; sonst baut Auth.js Weiterleitungen aus der
+      # Container-Adresse (https://0.0.0.0:3000/...)
+      - AUTH_URL=${AUTH_URL:-https://docs-neu.goethe-gymnasium-stolberg.de}
       - WORDPRESS_OAUTH_CLIENT_ID=${WORDPRESS_OAUTH_CLIENT_ID}
       - WORDPRESS_OAUTH_CLIENT_SECRET=${WORDPRESS_OAUTH_CLIENT_SECRET}
       - WORDPRESS_OAUTH_BASE_URL=${WORDPRESS_OAUTH_BASE_URL:-https://goethe-gymnasium-stolberg.de}
