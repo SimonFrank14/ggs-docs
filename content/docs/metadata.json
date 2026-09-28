@@ -1,6 +1,6 @@
 {
-  "commit": "fe1bb121518f1a387df214daaa33da9630f1e539",
-  "generated": "2026-09-27T21:36:38.466Z",
+  "commit": "c3535c43f5ce845063e331bf223d027b92347104",
+  "generated": "2026-09-28T19:31:49.424Z",
   "metadata": [
     {
       "__outstatic": {
@@ -38,6 +38,39 @@
       "slug": "vertretungsplan-app",
       "status": "draft",
       "title": "Vertretungsplan-App einrichten"
+    },
+    {
+      "__outstatic": {
+        "commit": "c3535c43f5ce845063e331bf223d027b92347104",
+        "hash": "2939597164",
+        "path": "content/docs/schulverwaltung/datenbank-sichern.md"
+      },
+      "author": {
+        "name": "Simon Frank",
+        "picture": "https://avatars.githubusercontent.com/u/71044587?v=4"
+      },
+      "collection": "schulverwaltung",
+      "description": "Backup der SchILD-3-Datenbank im SVWS-Server als SQLite-Datei herunterladen und bei Bedarf wieder einspielen",
+      "featured": true,
+      "order": 10,
+      "publishedAt": "2026-09-28T00:00:00.000Z",
+      "roles": [
+        {
+          "label": "Nur IT-Team",
+          "value": "admin"
+        },
+        {
+          "label": "Lehrkräfte",
+          "value": "lehrer"
+        },
+        {
+          "label": "Verwaltung",
+          "value": "verwaltung"
+        }
+      ],
+      "slug": "datenbank-sichern",
+      "status": "published",
+      "title": "Datenbank sichern und wiederherstellen"
     }
   ]
 }

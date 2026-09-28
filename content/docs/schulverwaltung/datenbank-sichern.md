@@ -9,6 +9,13 @@ featured: true
 roles:
   - label: Nur IT-Team
     value: admin
+  - label: Lehrkräfte
+    value: lehrer
+  - label: Verwaltung
+    value: verwaltung
+author:
+  name: Simon Frank
+  picture: https://avatars.githubusercontent.com/u/71044587?v=4
 ---
 
 SchILD 3 speichert alle Schuldaten auf dem **SVWS-Server**. In dessen Admin-Oberfläche lädst du mit wenigen Klicks ein vollständiges Backup der Datenbank als **SQLite-Datei** herunter. Mit derselben Datei stellst du den Stand später wieder her.
@@ -41,7 +48,9 @@ SchILD 3 speichert alle Schuldaten auf dem **SVWS-Server**. In dessen Admin-Ober
    ![Aufgeklappter Bereich Backup mit markierter Schaltfläche Backup starten (.sqlite)](/images/anleitungen/svws-backup/backup-starten.webp)
 
 4. Der Browser lädt die Datei herunter. Benenne sie mit dem Datum, zum Beispiel `svwsdb_2026-09-28.sqlite`, und verschiebe sie an den geschützten Speicherort.
+
 5. Prüfe, dass die Datei nicht leer ist. Ein Backup ist in der Regel mehrere Megabyte groß.
+
 6. Klicke links unten auf **Abmelden**.
 
 > **Hinweis:** **Backup starten (.zip)** erstellt dasselbe Backup als gepackte Datei. Sie ist kleiner, lässt sich aber genauso wiederherstellen. Nimm im Zweifel die `.sqlite`-Datei.
@@ -51,12 +60,15 @@ SchILD 3 speichert alle Schuldaten auf dem **SVWS-Server**. In dessen Admin-Ober
 > **Achtung:** Das Wiederherstellen **überschreibt alle Daten** im ausgewählten Schema. Alles, was seit dem Backup eingetragen wurde, ist danach weg. Erstelle deshalb vorher ein neues Backup des aktuellen Stands (siehe oben) und sag dem Sekretariat Bescheid. Niemand darf in der Zeit mit SchILD 3 arbeiten.
 
 1. Melde dich wie oben unter [svws.ggs.nrw/admin](https://svws.ggs.nrw/admin) an und prüfe, dass links das richtige Schema **svwsdb** ausgewählt ist.
+
 2. Klicke unter **Initialisieren / Wiederherstellen** auf **Backup wiederherstellen** **(1)**, um den Bereich aufzuklappen.
 
    ![Aufgeklappter Bereich Backup wiederherstellen mit markierten Schaltflächen Datei auswählen und Wiederherstellen](/images/anleitungen/svws-backup/wiederherstellen.webp)
 
 3. Klicke auf **Datei auswählen** **(2)** und wähle die Backup-Datei (`.sqlite` oder `.zip`) aus.
+
 4. Klicke auf **Wiederherstellen** **(3)**. Warte, bis die Meldung erscheint, dass die Wiederherstellung abgeschlossen ist.
+
 5. Öffne SchILD 3 und prüfe stichprobenartig, ob die Daten stimmen.
 
 ## Klappt nicht?
