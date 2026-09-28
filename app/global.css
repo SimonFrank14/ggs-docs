@@ -1241,3 +1241,41 @@ h4 {
 .ggs-nav-account ~ ul {
   margin-inline-start: 0.25rem !important;
 }
+
+/* Knöpfe über einer Anleitung: Markdown kopieren, in ChatGPT/Claude öffnen */
+.ggs-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: -0.25rem;
+}
+
+.ggs-page-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--color-fd-border);
+  border-radius: 999px;
+  color: var(--color-fd-muted-foreground);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ggs-page-action:hover {
+  background: var(--color-fd-accent);
+  color: var(--color-fd-foreground);
+}
+
+.ggs-page-action:focus-visible {
+  outline: 2px solid var(--color-fd-ring, var(--color-ggs-ink));
+  outline-offset: 2px;
+}
+
+.ggs-page-action svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}

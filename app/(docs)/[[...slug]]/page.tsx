@@ -6,9 +6,11 @@ import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
 import { mdxComponents } from '@/components/mdx';
+import { PageActions } from '@/components/page-actions';
 import { Portal } from '@/components/portal';
 import { RunbookBox } from '@/components/runbook-box';
 import { canAccess } from '@/lib/access';
+import { pageMarkdownUrl } from '@/lib/llm';
 import { AccountButton } from '@/components/account';
 import { baseOptions, homeOptions } from '@/lib/layout';
 import { visiblePages, visibleTree, docsSource } from '@/lib/source';
@@ -107,6 +109,10 @@ export default async function Page({ params }: Props) {
       <DocsPage toc={page.data.toc} full={page.data.full}>
         <DocsTitle>{page.data.title}</DocsTitle>
         <DocsDescription>{page.data.description}</DocsDescription>
+        <PageActions
+          markdownUrl={pageMarkdownUrl(page.url)}
+          isPublic={canAccess(page.data, null)}
+        />
         <DocsBody>
           {page.data.runbook ? <RunbookBox runbook={page.data.runbook} /> : null}
           <MDX components={mdxComponents} />
