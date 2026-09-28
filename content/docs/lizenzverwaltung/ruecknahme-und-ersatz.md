@@ -20,7 +20,13 @@ Jedes Buch hat eine **Rückholfrist** (Standard: 42 Tage, einstellbar unter **B�
 
 Bereits **abgerufene** Codes werden nie zurückgeholt. Ein abgerufener Code ist endgültig vergeben.
 
-> **Gut zu wissen:** Ist die Person noch Mitglied eines Kurses mit einer **automatischen Kurs-Regel** für das Buch, versorgt dieselbe Regel sie im selben Nachtlauf wieder mit einem neuen Platz, solange Codes frei sind. Die Frist beginnt dann von vorn. Endgültig frei wird ein Platz nur, wenn die Person nicht mehr im Kurs ist, die Regel pausiert oder auf manuell gestellt ist, oder wenn der Pool leer ist.
+Der frei gewordene Platz geht an andere Kursmitglieder, die noch auf das Buch warten. Die Person selbst versorgt ihre Kurs-Regel **nicht** automatisch neu – sonst hätte die Rücknahme keinen Sinn. Sie bekommt das Buch wieder, wenn sie
+
+- unter Meine Lizenzen auf **Neu anfordern** tippt,
+- du es ihr unter **Zuweisen** von Hand gibst oder
+- das nächste Schuljahr beginnt.
+
+Unter **Kurs-Regeln** zeigt ein Uhr-Symbol neben **Seats belegt**, wie viele Mitglieder ihren Platz verfallen ließen.
 
 Personengebundene Plätze aus dem Anton-CSV-Import haben **keine** Rückholfrist.
 
@@ -29,6 +35,8 @@ Personengebundene Plätze aus dem Anton-CSV-Import haben **keine** Rückholfrist
 1. Öffne **Rücknahme**.
 2. Links unter **Nicht eingelöst — kann zurückgeholt werden** siehst du je Buch, wie viele Plätze reserviert, aber nie abgerufen wurden, für welche Kurse und wie lange schon.
 3. Klicke beim Buch auf **Zurückholen**. **Alle** nicht abgerufenen Plätze dieses Buchs gehen sofort zurück in den Pool.
+
+Von Hand zurückgeholte Plätze behandelt GGS Media wie verfallene: Die Kurs-Regel gibt sie derselben Person nicht automatisch wieder.
 
 Einzelne Plätze holst du unter **Zuteilungen** zurück: Zeilen anhaken und **Nicht eingelöste zurückholen** klicken.
 

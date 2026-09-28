@@ -49,7 +49,7 @@ Steht bei einem Buch **Einlösen bei …** (zum Beispiel bei Anton), löst du de
 1. Tippe auf der Karte auf **Neu anfordern**.
 2. Ist das geklappt, erscheint die Karte wieder mit **Zum Anzeigen antippen**. Ruf den Code jetzt gleich ab.
 
-Das klappt, solange dein Kurs das Buch noch bekommt und Schlüssel frei sind. Sonst erscheint ein Hinweis. Dann schreib der Medienverwaltung oder dem IT-Support.
+Ein verfallener Platz kommt nicht von allein zurück, du musst ihn selbst neu anfordern. Das klappt, solange dein Kurs das Buch noch bekommt und Schlüssel frei sind. Sonst erscheint ein Hinweis. Dann schreib der Medienverwaltung oder dem IT-Support.
 
 ## Klappt nicht?
 

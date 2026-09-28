@@ -76,15 +76,16 @@ Ist beim Abruf kein Code mehr frei, sieht die Person: „Kein freier Code mehr i
 
 | Situation | Was passiert |
 |---|---|
-| Person ruft Code innerhalb der Rückholfrist nicht ab | Nachtlauf holt den Platz zurück. Unter Meine Lizenzen steht **Platz verfallen** mit **Neu anfordern**. |
-| … und die Person ist noch in einem Kurs mit automatischer Regel für das Buch | Die Regel legt im selben Nachtlauf einen neuen Platz an (falls Codes frei sind). Die Frist beginnt neu. |
+| Person ruft Code innerhalb der Rückholfrist nicht ab | Nachtlauf holt den Platz zurück. Unter Meine Lizenzen steht **Platz verfallen** mit **Neu anfordern**. Der Platz geht an andere Wartende. |
+| … und die Person ist noch in einem Kurs mit Regel für das Buch | Die Regel versorgt sie **nicht** automatisch neu, bis zum Ende der Laufzeit des verfallenen Platzes (meist: Stichtag). Sie bekommt das Buch über **Neu anfordern**, von Hand oder im nächsten Schuljahr. |
+| Platz von Hand zurückgeholt | wie verfallen: die Regel gibt ihn derselben Person nicht automatisch wieder |
 | Stichtag, Code nicht abgerufen | Platz wird zurückgeholt, Code bleibt frei |
 | Stichtag, Code abgerufen | Platz läuft ab, Code bleibt verbraucht |
 | Kurzausleihe vorbei | wie am Stichtag |
 | Charge beim Verlag abgelaufen | Freie und reservierte Codes der Charge werden **abgelaufen**. Eingelöste bleiben eingelöst. |
 | Ablaufdatum einer Charge in die Zukunft verschoben | Abgelaufene Codes der Charge werden wieder **frei** |
 | Code defekt gemeldet | Alter Code wird **gesperrt**, die Person bekommt sofort den nächsten freien Code (personengebunden: nur einen für sie registrierten) |
-| Regel entfernt | Nicht abgerufene Plätze der Regel gehen zurück in den Pool, abgerufene bleiben |
+| Regel entfernt | Nicht abgerufene Plätze der Regel gehen zurück in den Pool, abgerufene bleiben. Legst du die Regel neu an, werden alle Mitglieder wieder versorgt. |
 | Regel pausiert | Keine neuen Plätze. Bestehende bleiben, und **Neu anfordern** über diese Regel geht nicht mehr. |
 | Person verlässt den Kurs | Nichts. Ein abgerufener Platz bleibt bis zum Stichtag, ein nicht abgerufener verfällt nach der Rückholfrist und wird nicht erneuert. |
 | Neues Kursmitglied | Nächster Nachtlauf (oder **Jetzt abgleichen**) legt einen Platz an – bei automatischen Regeln |
@@ -110,8 +111,8 @@ Jede Nacht um 3:30 Uhr läuft GGS Media diese Schritte in dieser Reihenfolge ab.
 2. **Laufzeitende**: Reservierte Plätze mit abgelaufener Laufzeit gehen zurück in den Pool, eingelöste werden **abgelaufen**.
 3. **Verlagsablauf**: Freie und reservierte Codes aus abgelaufenen Chargen werden **abgelaufen**.
 4. **Aufräumen**: Codes, deren Status nicht zu ihrem Platz passt, werden korrigiert. Ein Code mit aktivem Platz ist nie frei; ein reservierter Code ohne aktiven Platz wird wieder frei.
-5. **Abgleich**: Jede aktive Regel mit automatischen Nachrückern sucht ihren Kurs (notfalls über den Namen, siehe [Wie eine Regel ihren Kurs findet](/lizenzverwaltung/zuweisen-und-kurs-regeln#wie-eine-regel-ihren-kurs-findet)) und legt für jedes Mitglied ohne Platz einen an, solange Codes frei sind.
+5. **Abgleich**: Jede aktive Regel mit automatischen Nachrückern sucht ihren Kurs (notfalls über den Namen, siehe [Wie eine Regel ihren Kurs findet](/lizenzverwaltung/zuweisen-und-kurs-regeln#wie-eine-regel-ihren-kurs-findet)) und legt für jedes Mitglied ohne Platz einen an, solange Codes frei sind. Übersprungen wird, wer seinen Platz in der laufenden Laufzeit verfallen ließ oder ihn von Hand zurückgeholt bekam.
 
 Das Ergebnis steht auf der Übersicht unter **Nächster Stichtag** und im **Verlauf** als **Nachtlauf**.
 
-> **Gut zu wissen:** Zum Stichtag legt Schritt 5 sofort Plätze für das neue Schuljahr an – und zwar für die Mitglieder der Teams, die es in dieser Nacht gibt. Solange die alten Teams in den Ferien noch aktiv sind, bekommen deren Mitglieder also Plätze für das neue Jahr. Wer sie nicht braucht und nicht abruft, verliert sie nach der Rückholfrist wieder. Archivierte Teams zählen nicht mit.
+> **Gut zu wissen:** Zum Stichtag legt Schritt 5 sofort Plätze für das neue Schuljahr an – für die Mitglieder der Teams, die GGS Media in dieser Nacht findet. Nicht mitgezählt werden archivierte Teams und Teams, deren Name mit einem Schuljahres-Vorsatz wie `S25_26` beginnt. Sind die alten Teams zum Stichtag noch aktiv und heißen noch gleich, bekommen deren Mitglieder Plätze für das neue Jahr, und die Regel bleibt beim alten Team. Wie und wann die Teams zum Schuljahreswechsel umgestellt werden, klärst du mit dem IT-Team.

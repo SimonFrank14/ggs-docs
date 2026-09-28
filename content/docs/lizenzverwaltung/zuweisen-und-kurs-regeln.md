@@ -61,7 +61,7 @@ Unter **Kurs-Regeln** siehst du jede Regel mit:
 - **Kurs / Klasse** und Zahl der Mitglieder. Das Symbol neben dem Namen zeigt, ob Lehrkräfte mitversorgt werden. Ein Klick darauf schaltet das um.
 - **Laufzeit**: **Schuljahr** (mit Stichtag) oder **dauerhaft**
 - **Nachrücker**: **automatisch** oder **manuell**. Mit dem Schalter änderst du das.
-- **Seats belegt**: versorgte Mitglieder von allen Mitgliedern
+- **Seats belegt**: versorgte Mitglieder von allen Mitgliedern. Das Personen-Symbol daneben zählt Mitglieder, die das Buch schon über eine andere Regel oder von Hand haben, das Uhr-Symbol Mitglieder, die ihren Platz verfallen ließen. Diese versorgt die Regel erst wieder nach **Neu anfordern** oder im nächsten Schuljahr.
 - **Status** (siehe Tabelle)
 
 Die Knöpfe rechts in jeder Zeile:
@@ -85,7 +85,7 @@ Die Knöpfe rechts in jeder Zeile:
 
 Teams werden jedes Schuljahr neu angelegt und bekommen dabei eine neue Kennung. Deshalb merkt sich eine Regel den **Namen** des Kurses, nicht nur das Team. Jede Nacht sucht sie so:
 
-1. Gibt es das bisherige Team noch? Dann gilt es, auch wenn es umbenannt wurde.
+1. Gibt es das bisherige Team noch? Dann gilt es, auch wenn es umbenannt wurde. Archivierte Teams und Teams mit einem Schuljahres-Vorsatz wie `S25_26` im Namen zählen dabei nicht.
 2. Sonst: Gibt es **genau ein** Team mit demselben Namen? Dann folgt die Regel automatisch diesem Team. Groß- und Kleinschreibung, Satzzeichen und ein alter Schuljahres-Vorsatz wie `S25_26` spielen dabei keine Rolle.
 3. Sonst meldet die Regel **Team fehlt** oder **Name mehrdeutig**.
 
@@ -98,6 +98,7 @@ Für jedes Buch gibt es pro Kursname nur **eine** Regel. Legst du dieselbe Kombi
 - Als **Schülerin oder Schüler** zählt, wer im Schulkonto eine Klasse oder Stufe als Stellenbezeichnung hat (z. B. `07A`, `EF`, `Q1`).
 - Alle anderen Mitglieder zählen als **Lehrkraft** und bekommen nur einen Platz, wenn **Lehrkräfte mitversorgen** an ist.
 - Wer den Kurs verlässt, behält seinen Platz bis zum Stichtag. Die Regel nimmt ihn nicht zurück.
+- Wer seinen Platz verfallen ließ, wird von der Regel bis zum Ende dieser Laufzeit übersprungen (siehe [Rücknahme](/lizenzverwaltung/ruecknahme-und-ersatz#automatisch-die-rückholfrist)).
 
 ## Alle Zuteilungen ansehen
 
