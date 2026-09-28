@@ -50,7 +50,7 @@ Die Tabelle zeigt für jede Regel den Bedarf im neuen Jahr und wie viele Codes n
 | **Kein Team mit diesem Namen** / **Mehrere Teams mit diesem Namen** | Die Regel findet ihren Kurs nicht eindeutig | **Klären** → das richtige Team wählen |
 | **wartet auf neue Teams** | In den Sommerferien sind die neuen Teams oft noch nicht angelegt | abwarten und nach dem ersten Schultag noch einmal prüfen |
 
-GGS Media ignoriert archivierte Teams und Teams, deren Name mit einem Schuljahres-Vorsatz wie `S25_26` beginnt. Solange die alten Teams aktiv sind und noch gleich heißen, bleibt eine Regel beim alten Team. Wann die Teams umgestellt werden, klärst du mit dem IT-Team.
+Die alten Teams werden zum Schuljahreswechsel archiviert. GGS Media ignoriert archivierte Teams, deshalb zeigen die Regeln in den Ferien **wartet auf neue Teams**. Sobald ein neues Team mit demselben Namen angelegt ist, folgt die Regel ihm automatisch im nächsten Nachtlauf.
 | **pausiert** | Regel ist pausiert | bei Bedarf unter Kurs-Regeln fortsetzen |
 
 **Wechsel prüfen** lädt die Vorschau neu. **… Regeln jetzt abgleichen** versorgt sofort alle Mitglieder, statt auf die Nacht zu warten.
