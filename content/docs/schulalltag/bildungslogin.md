@@ -33,7 +33,7 @@ Hast du deine Schlüssel schon, mach direkt mit Schritt 4 weiter.
 
 1. Öffne die [Lizenz-Verwaltung](https://media.ggs.nrw/my-licenses) der Schule.
 2. Melde dich mit deinem Schulkonto an.
-3. Klicke in der Tabelle auf einen Lizenzschlüssel. Er wird angezeigt und automatisch in die Zwischenablage kopiert. Speichere ihn an einem sicheren Ort oder trage ihn gleich ein (Schritt 4 bis 6) und komm dann für den nächsten Schlüssel zurück.
+3. Tippe bei einem Buch auf **Zum Anzeigen antippen**. Der Lizenzschlüssel wird angezeigt und automatisch in die Zwischenablage kopiert. Trag ihn gleich ein (Schritt 4 bis 6) und komm dann für den nächsten Schlüssel zurück. Mehr dazu in [Lizenzcodes für digitale Schulbücher abrufen](/schulalltag/meine-lizenzen).
 4. Öffne das [Bildungslogin Medienregal](https://www.bildungslogin.de/app/#/sso/bilob?idp_hint=USR__OOC_NW_AixConcept) und melde dich an, falls nötig.
 5. Klicke auf **Medien hinzufügen**.
 6. Gib einen Lizenzschlüssel in das Eingabefeld ein und klicke auf **Bestätigen**. Wiederhole das für jeden Schlüssel.
