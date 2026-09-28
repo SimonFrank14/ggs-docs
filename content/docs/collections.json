@@ -28,5 +28,11 @@
     "slug": "lizenzverwaltung",
     "path": "content/docs/lizenzverwaltung",
     "parent": null
+  },
+  {
+    "title": "Schulverwaltung (SVWS)",
+    "slug": "schulverwaltung",
+    "path": "content/docs/schulverwaltung",
+    "parent": null
   }
 ]

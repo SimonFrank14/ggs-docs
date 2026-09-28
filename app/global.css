@@ -132,6 +132,88 @@ h4 {
   cursor: zoom-in;
 }
 
+/*
+ * Schritte: Jede nummerierte Liste direkt im Text wird zur Schrittfolge mit
+ * gelbem Nummernkreis und einer feinen Linie, die die Schritte verbindet.
+ * Verschachtelte Listen bleiben normal.
+ */
+.prose > ol {
+  counter-reset: ggs-step;
+  list-style: none;
+  padding-inline-start: 0;
+  margin-block: 1.5rem;
+}
+
+.prose > ol > li {
+  counter-increment: ggs-step;
+  position: relative;
+  margin-block: 0;
+  padding-inline-start: 3rem;
+  padding-bottom: 1.4rem;
+}
+
+.prose > ol > li:last-child {
+  padding-bottom: 0.25rem;
+}
+
+.prose > ol > li::before {
+  content: counter(ggs-step);
+  position: absolute;
+  top: -0.1rem;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: var(--color-ggs-gold);
+  color: #333333;
+  font-family: var(--font-ggs-display), var(--font-ggs-sans), sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  line-height: 1;
+  box-shadow: 0 0 0 4px var(--color-fd-background);
+}
+
+/* Verbindungslinie vom Kreis bis zum nächsten Schritt */
+.prose > ol > li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 2.2rem;
+  bottom: 0.2rem;
+  left: calc(1rem - 1px);
+  width: 2px;
+  border-radius: 2px;
+  background: var(--color-fd-border);
+}
+
+.prose > ol > li > p:first-child {
+  margin-top: 0;
+}
+
+/* Screenshots im Schritt etwas vom Text absetzen */
+.prose > ol > li img {
+  margin-block: 0.9rem 0.3rem;
+  box-shadow: var(--ggs-shadow);
+}
+
+@media (max-width: 640px) {
+  .prose > ol > li {
+    padding-inline-start: 2.5rem;
+  }
+
+  .prose > ol > li::before {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.85rem;
+  }
+
+  .prose > ol > li:not(:last-child)::after {
+    top: 2rem;
+    left: calc(0.875rem - 1px);
+  }
+}
+
 /* Gelbe Zierlinie unter Abschnittsüberschriften, wie auf der Schulhomepage */
 .prose h2 {
   padding-bottom: 0.4rem;
