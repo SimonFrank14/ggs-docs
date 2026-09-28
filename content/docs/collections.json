@@ -22,5 +22,11 @@
     "slug": "schulalltag",
     "path": "content/docs/schulalltag",
     "parent": null
+  },
+  {
+    "title": "Lizenzverwaltung",
+    "slug": "lizenzverwaltung",
+    "path": "content/docs/lizenzverwaltung",
+    "parent": null
   }
 ]
